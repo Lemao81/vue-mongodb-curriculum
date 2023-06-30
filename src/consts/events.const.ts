@@ -1,0 +1,5 @@
+export const EVENT_OK = 'ok'
+export const EVENT_CANCEL = 'cancel'
+export const EVENT_SKILL = 'skill'
+export const EVENT_JOB = 'job'
+export const EVENT_EDUCATION = 'education'
