@@ -1,5 +1,5 @@
 <template>
-  <v-container class="login-container">
+  <v-container class="register-container">
     <v-row align="center" justify="center">
       <v-col cols="4">
         <v-text-field ref="username" label="Username" v-model.trim="username" :rules="[rules.required]" required></v-text-field>
@@ -17,8 +17,23 @@
       </v-col>
     </v-row>
     <v-row align="center" justify="center">
+      <v-col cols="4">
+        <v-text-field
+          ref="passwordConfirmation"
+          label="Confirm Password"
+          v-model.trim="passwordConfirmation"
+          :type="getPasswordFieldType()"
+          :rules="[rules.required]"
+          required
+        ></v-text-field>
+      </v-col>
+      <v-col cols="1">
+        <v-spacer></v-spacer>
+      </v-col>
+    </v-row>
+    <v-row align="center" justify="center">
       <v-col cols="2">
-        <v-btn @click="onLogin">Login</v-btn>
+        <v-btn @click="onRegister">Register</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -28,11 +43,12 @@
 import { fieldRequired } from '@/functions/validations.function'
 
 export default {
-  name: 'LoginView',
+  name: 'RegisterView',
   data() {
     return {
       username: '',
       password: '',
+      passwordConfirmation: '',
       showPassword: false,
       rules: {
         required: fieldRequired
@@ -47,21 +63,27 @@ export default {
       this.showPassword = !this.showPassword
     },
     onRegister() {
-      const isValid = this.$refs.username.checkValidity() && this.$refs.password.checkValidity()
+      const isValid = this.$refs.username.checkValidity() && this.$refs.password.checkValidity() && this.$refs.passwordConfirmation.checkValidity()
       if (!isValid) {
         this.$toast.warning('Input NOK')
 
         return
       }
 
-      // TODO sent login api request
+      if (this.password !== this.passwordConfirmation) {
+        this.$toast.warning('Password + confirmation must be equal')
+
+        return
+      }
+
+      // TODO sent register api request
     }
   }
 }
 </script>
 
 <style scoped>
-.login-container {
+.register-container {
   margin-top: auto;
   margin-bottom: auto;
 }

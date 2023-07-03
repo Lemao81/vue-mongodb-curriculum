@@ -3,6 +3,7 @@
     <p>Curriculum Creator</p>
     <nav>
       <RouterLink to="/">Login</RouterLink>
+      <RouterLink to="/register">Register</RouterLink>
       <RouterLink to="/curriculum">Curriculum</RouterLink>
     </nav>
   </div>
