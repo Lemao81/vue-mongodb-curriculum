@@ -1,13 +1,17 @@
 <template>
-  <Curriculum />
+  <div>
+    <CurriculumSection :title="'Skills'" :form-component="'SkillForm'" />
+    <CurriculumSection :title="'Jobs'" :form-component="'JobForm'" />
+    <CurriculumSection :title="'Education'" :form-component="'EducationForm'" />
+  </div>
 </template>
 
-<script>
-import Curriculum from '@/components/Curriculum.vue'
+<script lang="ts">
+import CurriculumSection from '@/components/CurriculumSection.vue'
 
 export default {
   name: 'CurriculumView',
-  components: { Curriculum }
+  components: { CurriculumSection }
 }
 </script>
 
