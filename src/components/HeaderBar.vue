@@ -1,6 +1,6 @@
 <template>
   <div class="header-bar-container">
-    <p>the header</p>
+    <p>Curriculum Creator</p>
     <nav>
       <RouterLink to="/">Login</RouterLink>
       <RouterLink to="/curriculum">Curriculum</RouterLink>

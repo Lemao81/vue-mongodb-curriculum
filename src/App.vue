@@ -22,6 +22,7 @@ header {
 
 main {
   display: flex;
+  flex-grow: 1;
   padding: 1rem;
 }
 
