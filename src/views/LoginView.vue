@@ -8,14 +8,7 @@
         <v-spacer></v-spacer>
       </v-col>
     </v-row>
-    <v-row align="center" justify="center">
-      <v-col cols="4">
-        <v-text-field ref="password" label="Password" v-model.trim="password" :type="getPasswordFieldType()" :rules="[rules.required]" required></v-text-field>
-      </v-col>
-      <v-col cols="1">
-        <fai icon="eye" @click="onShowPassword"></fai>
-      </v-col>
-    </v-row>
+    <PasswordField ref="password" v-model:password="password" />
     <v-row align="center" justify="center">
       <v-col cols="2">
         <v-btn @click="onLogin">Login</v-btn>
@@ -26,6 +19,7 @@
 
 <script lang="ts">
 import { fieldRequired } from '@/functions/validations.function'
+import PasswordField from '@/components/PasswordField.vue'
 
 export default {
   name: 'LoginView',
@@ -33,20 +27,13 @@ export default {
     return {
       username: '',
       password: '',
-      showPassword: false,
       rules: {
         required: fieldRequired
       }
     }
   },
   methods: {
-    getPasswordFieldType() {
-      return this.showPassword ? 'text' : 'password'
-    },
-    onShowPassword() {
-      this.showPassword = !this.showPassword
-    },
-    onRegister() {
+    onLogin() {
       const isValid = this.$refs.username.checkValidity() && this.$refs.password.checkValidity()
       if (!isValid) {
         this.$toast.warning('Input NOK')
@@ -55,8 +42,10 @@ export default {
       }
 
       // TODO sent login api request
+      console.log(`Login with ${this.username} / ${this.password}`)
     }
-  }
+  },
+  components: { PasswordField }
 }
 </script>
 

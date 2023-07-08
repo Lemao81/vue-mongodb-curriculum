@@ -8,14 +8,7 @@
         <v-spacer></v-spacer>
       </v-col>
     </v-row>
-    <v-row align="center" justify="center">
-      <v-col cols="4">
-        <v-text-field ref="password" label="Password" v-model.trim="password" :type="getPasswordFieldType()" :rules="[rules.required]" required></v-text-field>
-      </v-col>
-      <v-col cols="1">
-        <fai icon="eye" @click="onShowPassword"></fai>
-      </v-col>
-    </v-row>
+    <PasswordField ref="password" v-model:password="password" v-model:show-password="showPassword" />
     <v-row align="center" justify="center">
       <v-col cols="4">
         <v-text-field
@@ -41,9 +34,11 @@
 
 <script lang="ts">
 import { fieldRequired } from '@/functions/validations.function'
+import PasswordField from '@/components/PasswordField.vue'
 
 export default {
   name: 'RegisterView',
+  components: { PasswordField },
   data() {
     return {
       username: '',
@@ -58,9 +53,6 @@ export default {
   methods: {
     getPasswordFieldType() {
       return this.showPassword ? 'text' : 'password'
-    },
-    onShowPassword() {
-      this.showPassword = !this.showPassword
     },
     onRegister() {
       const isValid = this.$refs.username.checkValidity() && this.$refs.password.checkValidity() && this.$refs.passwordConfirmation.checkValidity()
@@ -77,6 +69,7 @@ export default {
       }
 
       // TODO sent register api request
+      console.log(`Regiter with ${this.username} / ${this.password}`)
     }
   }
 }
