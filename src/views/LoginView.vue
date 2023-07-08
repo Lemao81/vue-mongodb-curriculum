@@ -1,13 +1,6 @@
 <template>
   <v-container class="login-container">
-    <v-row align="center" justify="center">
-      <v-col cols="4">
-        <v-text-field ref="username" label="Username" v-model.trim="username" :rules="[rules.required]" required></v-text-field>
-      </v-col>
-      <v-col cols="1">
-        <v-spacer></v-spacer>
-      </v-col>
-    </v-row>
+    <UsernameField ref="username" v-model:username="username" />
     <PasswordField ref="password" v-model:password="password" />
     <v-row align="center" justify="center">
       <v-col cols="2">
@@ -20,6 +13,7 @@
 <script lang="ts">
 import { fieldRequired } from '@/functions/validations.function'
 import PasswordField from '@/components/PasswordField.vue'
+import UsernameField from '@/components/UsernameField.vue'
 
 export default {
   name: 'LoginView',
@@ -45,7 +39,7 @@ export default {
       console.log(`Login with ${this.username} / ${this.password}`)
     }
   },
-  components: { PasswordField }
+  components: { UsernameField, PasswordField }
 }
 </script>
 

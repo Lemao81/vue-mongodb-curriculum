@@ -4,7 +4,7 @@
       <v-text-field
         ref="password"
         label="Password"
-        v-model="passwordData"
+        v-model.trim="passwordData"
         @input="onPasswordChange"
         :type="getPasswordFieldType()"
         :rules="[rules.required]"

@@ -1,13 +1,6 @@
 <template>
   <v-container class="register-container">
-    <v-row align="center" justify="center">
-      <v-col cols="4">
-        <v-text-field ref="username" label="Username" v-model.trim="username" :rules="[rules.required]" required></v-text-field>
-      </v-col>
-      <v-col cols="1">
-        <v-spacer></v-spacer>
-      </v-col>
-    </v-row>
+    <UsernameField ref="username" v-model:username="username" />
     <PasswordField ref="password" v-model:password="password" v-model:show-password="showPassword" />
     <v-row align="center" justify="center">
       <v-col cols="4">
@@ -35,10 +28,11 @@
 <script lang="ts">
 import { fieldRequired } from '@/functions/validations.function'
 import PasswordField from '@/components/PasswordField.vue'
+import UsernameField from '@/components/UsernameField.vue'
 
 export default {
   name: 'RegisterView',
-  components: { PasswordField },
+  components: { UsernameField, PasswordField },
   data() {
     return {
       username: '',
