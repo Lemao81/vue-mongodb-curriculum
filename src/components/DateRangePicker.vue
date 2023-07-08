@@ -18,7 +18,17 @@ import { MonthYear } from '@/interfaces/month-year.interface'
 
 export default {
   name: 'DateRangePicker',
-  props: ['startDate', 'endDate', 'isCurrent'],
+  props: {
+    startDate: {
+      type: Date
+    },
+    endDate: {
+      type: Date
+    },
+    isCurrent: {
+      type: Boolean
+    }
+  },
   methods: {
     onStartDateChange(monthYear: MonthYear) {
       this.$emit('update:startDate', monthYear)

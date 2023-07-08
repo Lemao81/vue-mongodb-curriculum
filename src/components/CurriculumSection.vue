@@ -21,7 +21,16 @@ import { Job } from '@/models/job.model'
 import { Education } from '@/models/education.model'
 
 export default {
-  props: ['title', 'formComponent'],
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    formComponent: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       isEdit: false
