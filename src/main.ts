@@ -18,6 +18,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import UserApiService from '@/apis/user-api.service'
 
 library.add(fas)
 
@@ -38,5 +39,7 @@ const toastOptions: ToastProps = {
 }
 // noinspection TypeScriptValidateTypes
 app.use(ToastPlugin, toastOptions)
+
+app.config.globalProperties.$userApi = new UserApiService()
 
 app.mount('#app')

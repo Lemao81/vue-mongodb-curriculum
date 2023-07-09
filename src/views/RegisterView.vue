@@ -48,7 +48,7 @@ export default {
     getPasswordFieldType() {
       return this.showPassword ? 'text' : 'password'
     },
-    onRegister() {
+    async onRegister() {
       const isValid = this.$refs.username.checkValidity() && this.$refs.password.checkValidity() && this.$refs.passwordConfirmation.checkValidity()
       if (!isValid) {
         this.$toast.warning('Input NOK')
@@ -62,8 +62,7 @@ export default {
         return
       }
 
-      // TODO sent register api request
-      console.log(`Regiter with ${this.username} / ${this.password}`)
+      await this.$userApi.registerUser(this.username, this.password)
     }
   }
 }

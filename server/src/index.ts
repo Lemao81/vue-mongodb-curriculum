@@ -13,9 +13,8 @@ async function main() {
     const saUser = await User.findOne({ userName: 'sa' })
     if (!saUser) {
       await User.create({
-        userName: 'sa',
-        passwordHash: '4cf6829aa93728e8f3c97df913fb1bfa95fe5810e2933a05943f8312a98d9cf2',
-        creationDate: Date.now()
+        username: 'sa',
+        passwordHash: '4cf6829aa93728e8f3c97df913fb1bfa95fe5810e2933a05943f8312a98d9cf2'
       })
     }
   }

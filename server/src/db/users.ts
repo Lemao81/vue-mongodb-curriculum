@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import { COLLECTION_USERS } from '../consts/collections.const'
 
 const userSchema = new mongoose.Schema({
-  userName: {
+  username: {
     type: String,
     required: true,
     minLength: 2
@@ -11,9 +11,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  creationDate: {
+  createdDate: {
     type: Date,
     immutable: true,
+    default: () => Date.now()
+  },
+  modifiedDate: {
+    type: Date,
     default: () => Date.now()
   }
 })
