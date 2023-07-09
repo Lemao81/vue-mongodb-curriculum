@@ -40,6 +40,6 @@ const toastOptions: ToastProps = {
 // noinspection TypeScriptValidateTypes
 app.use(ToastPlugin, toastOptions)
 
-app.config.globalProperties.$userApi = new UserApiService()
+app.config.globalProperties.$userApi = new UserApiService(app.config.globalProperties.$toast)
 
 app.mount('#app')

@@ -10,7 +10,7 @@ main().catch((error) => console.log(error))
 async function main() {
   const isConnected = await connectDb()
   if (isConnected) {
-    const saUser = await User.findOne({ userName: 'sa' })
+    const saUser = await User.findOne({ username: 'sa' })
     if (!saUser) {
       await User.create({
         username: 'sa',

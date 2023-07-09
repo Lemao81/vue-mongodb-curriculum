@@ -1,6 +1,7 @@
 import * as Koa from 'koa'
 import * as KoaRouter from 'koa-router'
 import * as bodyParser from 'koa-bodyparser'
+const cors = require("@koa/cors")
 
 import * as json from 'koa-json'
 import registerUserEndpoints from './apis/user-api'
@@ -17,6 +18,7 @@ export default async function startWebServer() {
 
   registerUserEndpoints(router)
 
+  app.use(cors())
   app.use(json())
   app.use(bodyParser())
   app.use(router.routes()).use(router.allowedMethods())
