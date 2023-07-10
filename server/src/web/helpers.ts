@@ -1,6 +1,7 @@
 import { KoaContext } from './types'
 import { HttpStatusCode } from 'axios'
 import { Next } from 'koa'
+import { createHash } from 'crypto'
 
 export function parseBody<T>(ctx: KoaContext): T | null {
   const body = (<any>ctx.request).body
@@ -16,4 +17,18 @@ export async function respondWithBadRequest(ctx: KoaContext, next: Next, message
   ctx.status = HttpStatusCode.BadRequest
 
   await next()
+}
+
+export async function respondWithUnauthorized(ctx: KoaContext, next: Next) {
+  ctx.body = { error: 'Unauthorized' }
+  ctx.status = HttpStatusCode.Unauthorized
+
+  await next()
+}
+
+export function createSha256Hash(input: string) {
+  const hash = createHash('sha256')
+  hash.update(input)
+
+  return hash.digest('hex')
 }

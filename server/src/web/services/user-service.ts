@@ -1,6 +1,6 @@
-import * as crypto from 'crypto'
-import User from '../../db/users'
+import User from '../../db/schemas/users'
 import { CreateResultOrError } from '../types'
+import { createSha256Hash } from '../helpers'
 
 class UserService {
   async createUser(username: string, password: string): Promise<CreateResultOrError> {
@@ -11,9 +11,7 @@ class UserService {
       }
     }
 
-    const hash = crypto.createHash('sha256')
-    hash.update(password)
-    const passwordHash = hash.digest('hex')
+    const passwordHash = createSha256Hash(password)
 
     return await User.create({
       username,
@@ -23,5 +21,4 @@ class UserService {
 }
 
 const userService = new UserService()
-
 export default userService

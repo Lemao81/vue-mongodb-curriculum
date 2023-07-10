@@ -14,6 +14,7 @@
   "dependencies": {
     "@koa/cors": "^4.0.0",
     "dotenv": "^16.3.1",
+    "jsonwebtoken": "^9.0.1",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.1",
     "koa-json": "^2.0.2",
@@ -21,6 +22,8 @@
     "mongoose": "^7.3.1"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/mongoose": "^5.11.97",
     "@types/koa": "^2.13.6",
     "@types/koa__cors": "^4.0.0",
     "@types/koa-bodyparser": "^4.3.10",
