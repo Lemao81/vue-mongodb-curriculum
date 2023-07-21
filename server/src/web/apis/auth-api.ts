@@ -7,7 +7,7 @@ import authService from '../services/auth-service'
 import { HttpStatusCode } from 'axios'
 
 export default function registerAuthEndpoints(router: Router) {
-  router.post('/login', login)
+  router.post('/api/auth/login', login)
 }
 
 async function login(ctx: KoaContext, next: Next) {
@@ -25,7 +25,7 @@ async function login(ctx: KoaContext, next: Next) {
     return
   }
 
-  ctx.body = { token: result.token }
+  ctx.body = { accessToken: result.accessToken }
   ctx.status = HttpStatusCode.Ok
 
   await next()

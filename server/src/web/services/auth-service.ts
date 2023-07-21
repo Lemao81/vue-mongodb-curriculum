@@ -15,7 +15,7 @@ class AuthService {
 
     const passwordHash = createSha256Hash(password)
     const isAuthorized = user.passwordHash === passwordHash
-    const token = jwt.sign(
+    const accessToken = jwt.sign(
       {
         userId: user.id,
         username: user.username
@@ -26,7 +26,7 @@ class AuthService {
 
     return {
       isAuthorized,
-      token
+      accessToken
     }
   }
 }
