@@ -18,9 +18,14 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import UserApiService from '@/apis/user-api.service'
+import { UserApiService } from '@/apis/user-api-service'
+import { AuthApiService } from '@/apis/auth-api-service'
+import axios from 'axios'
+import { API_BASE_URL } from '@/consts/common.const'
 
 library.add(fas)
+
+axios.defaults.baseURL = API_BASE_URL
 
 const vuetify = createVuetify({
   components,
@@ -40,6 +45,8 @@ const toastOptions: ToastProps = {
 // noinspection TypeScriptValidateTypes
 app.use(ToastPlugin, toastOptions)
 
-app.config.globalProperties.$userApi = new UserApiService(app.config.globalProperties.$toast)
+const toast = app.config.globalProperties.$toast
+app.config.globalProperties.$userApi = new UserApiService(toast)
+app.config.globalProperties.$authApi = new AuthApiService(toast)
 
 app.mount('#app')

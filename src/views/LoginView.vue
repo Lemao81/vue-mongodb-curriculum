@@ -27,7 +27,7 @@ export default {
     }
   },
   methods: {
-    onLogin() {
+    async onLogin() {
       const isValid = this.$refs.username.checkValidity() && this.$refs.password.checkValidity()
       if (!isValid) {
         this.$toast.warning('Input NOK')
@@ -35,8 +35,10 @@ export default {
         return
       }
 
-      // TODO sent login api request
-      console.log(`Login with ${this.username} / ${this.password}`)
+      const isLoggedIn = await this.$authApi.login(this.username, this.password)
+      if (isLoggedIn) {
+        this.$router.push('/curriculum')
+      }
     }
   },
   components: { UsernameField, PasswordField }
