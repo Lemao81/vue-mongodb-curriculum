@@ -52,17 +52,24 @@ export default {
       const isValid = this.$refs.username.checkValidity() && this.$refs.password.checkValidity() && this.$refs.passwordConfirmation.checkValidity()
       if (!isValid) {
         this.$toast.warning('Input NOK')
-
         return
       }
 
       if (this.password !== this.passwordConfirmation) {
         this.$toast.warning('Password + confirmation must be equal')
-
         return
       }
 
-      await this.$userApi.registerUser(this.username, this.password)
+      const result = await this.$userApi.registerUser(this.username, this.password)
+      if (result.error) {
+        this.$toast.error(result.error)
+        return
+      }
+
+      if (result.isSuccess) {
+        this.$toast.info('You have been registered')
+        this.$router.push('/')
+      }
     }
   }
 }

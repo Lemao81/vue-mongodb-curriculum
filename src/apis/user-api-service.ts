@@ -1,22 +1,26 @@
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { USER_API_BASE_URL } from '@/consts/common.const'
-import { ToastPluginApi } from 'vue-toast-notification'
 import { RegisterUserRequest } from '@/interfaces/dtos/register-user-request'
+import { RegisterUserResult } from '@/interfaces/register-user-result'
+import { RegisterUserResponse } from '@/interfaces/dtos/register-user-response'
 
 export class UserApiService {
-  constructor(private toast: ToastPluginApi) {}
+  constructor() {}
 
-  async registerUser(username: string, password: string): Promise<void> {
+  async registerUser(username: string, password: string): Promise<RegisterUserResult> {
     const request: RegisterUserRequest = {
       username,
       password
     }
 
     try {
-      await axios.post(USER_API_BASE_URL, request)
-      this.toast.info('You have been registered')
+      const response = await axios.post<RegisterUserResponse, AxiosResponse<RegisterUserResponse>>(USER_API_BASE_URL, request)
+
+      return response?.data?.url ? { isSuccess: true } : { error: 'Registering failed' }
     } catch (error: AxiosError) {
-      this.toast.warning(`Registration failed: ${error.response.data.error}`)
+      return { error: error.message || 'Error during API call' }
     }
   }
 }
+
+export const userApiService = new UserApiService()
