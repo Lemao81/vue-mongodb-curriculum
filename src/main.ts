@@ -19,7 +19,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import { UserApiService } from '@/apis/user-api-service'
-import { AuthApiService } from '@/apis/auth-api-service'
+import { authApiService } from '@/apis/auth-api-service'
 import axios from 'axios'
 import { API_BASE_URL } from '@/consts/common.const'
 
@@ -47,6 +47,6 @@ app.use(ToastPlugin, toastOptions)
 
 const toast = app.config.globalProperties.$toast
 app.config.globalProperties.$userApi = new UserApiService(toast)
-app.config.globalProperties.$authApi = new AuthApiService(toast)
+app.config.globalProperties.$authApi = authApiService
 
 app.mount('#app')

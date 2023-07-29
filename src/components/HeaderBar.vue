@@ -2,7 +2,8 @@
   <div class="header-bar-container">
     <p>Curriculum Creator</p>
     <nav>
-      <RouterLink to="/">Login</RouterLink>
+      <v-btn v-if="isLoggedIn" @click="onLogout">Logout</v-btn>
+      <RouterLink v-else to="/">Login</RouterLink>
       <RouterLink to="/register">Register</RouterLink>
       <RouterLink to="/curriculum">Curriculum</RouterLink>
     </nav>
@@ -10,8 +11,27 @@
 </template>
 
 <script lang="ts">
+import { useUserAuthStore } from '@/stores/user-auth-store'
+import { mapState } from 'pinia'
+
 export default {
-  name: 'HeaderBar'
+  name: 'HeaderBar',
+  setup() {
+    return {
+      userAuthStore: useUserAuthStore()
+    }
+  },
+  computed: {
+    ...mapState(useUserAuthStore, {
+      isLoggedIn: 'isAuthenticated'
+    })
+  },
+  methods: {
+    onLogout() {
+      this.userAuthStore.$reset()
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 

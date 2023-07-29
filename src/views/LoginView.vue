@@ -14,9 +14,17 @@
 import { fieldRequired } from '@/functions/validations.function'
 import PasswordField from '@/components/PasswordField.vue'
 import UsernameField from '@/components/UsernameField.vue'
+import { useUserAuthStore } from '@/stores/user-auth-store'
+import { AccessTokenPayload } from '@/interfaces/access-token-payload'
+import { extractJwtPayload } from '@/helpers/helper'
 
 export default {
   name: 'LoginView',
+  setup() {
+    return {
+      userAuthStore: useUserAuthStore()
+    }
+  },
   data() {
     return {
       username: '',
@@ -35,10 +43,25 @@ export default {
         return
       }
 
-      const isLoggedIn = await this.$authApi.login(this.username, this.password)
-      if (isLoggedIn) {
-        this.$router.push('/curriculum')
+      const result = await this.$authApi.login(this.username, this.password)
+      if (result.error || !result.accessToken) {
+        this.$toast.error(result.error || 'No access token returned')
+        return
       }
+
+      const payload = extractJwtPayload<AccessTokenPayload>(result.accessToken)
+      if (!payload) {
+        console.error("Jwt payload couldn't be extracted")
+        this.$toast.warning('Login failed')
+        return
+      }
+
+      this.userAuthStore.$patch({
+        username: payload.username,
+        accessToken: result.accessToken,
+        isAuthenticated: true
+      })
+      this.$router.push('/curriculum')
     }
   },
   components: { UsernameField, PasswordField }
