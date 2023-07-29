@@ -1,4 +1,4 @@
-import User, { IUser } from '../../db/schemas/users'
+import UserModel, { UserDocument } from '../../db/schemas/users'
 import { LoginResult } from '../interfaces/login-result'
 import { createSha256Hash } from '../helpers'
 import * as jwt from 'jsonwebtoken'
@@ -6,7 +6,7 @@ import { ENV_JWT_SECRET } from '../../consts/env-variables.const'
 
 class AuthService {
   async login(username: string, password: string): Promise<LoginResult> {
-    const user: IUser = await User.findOne({ username: username })
+    const user: UserDocument = await UserModel.findOne({ username: username })
     if (!user) {
       return {
         isAuthorized: false

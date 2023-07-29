@@ -1,12 +1,14 @@
-import { Document, Schema, model, Model } from 'mongoose'
+import { Document, Schema, model } from 'mongoose'
 import { COLLECTION_USERS } from '../../consts/collections.const'
 
-export interface IUser extends Document {
+export interface User {
   username: string
   passwordHash: string
-  createdDate: Date
-  modifiedDate: Date
+  createdDate?: Date
+  modifiedDate?: Date
 }
+
+export interface UserDocument extends User, Document {}
 
 const userSchema = new Schema({
   username: {
@@ -29,6 +31,5 @@ const userSchema = new Schema({
   }
 })
 
-const User = model(COLLECTION_USERS, userSchema)
-
-export default User
+const UserModel = model(COLLECTION_USERS, userSchema)
+export default UserModel
