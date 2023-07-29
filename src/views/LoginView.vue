@@ -57,6 +57,7 @@ export default {
       }
 
       this.userAuthStore.$patch({
+        userId: payload.userId,
         username: payload.username,
         accessToken: result.accessToken,
         isAuthenticated: true

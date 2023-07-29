@@ -1,5 +1,5 @@
-import { UserApiService } from '@/apis/user-api-service'
-import { AuthApiService } from '@/apis/auth-api-service'
+import { UserApiService } from '@/services/apis/user-api-service'
+import { AuthApiService } from '@/services/apis/auth-api-service'
 
 export {}
 
