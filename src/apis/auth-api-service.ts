@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { AUTH_API_BASE_URL } from '@/consts/common.const'
+import { AUTH_API_BASE_URL } from '@/consts/common-consts'
 import { LoginRequest } from '@/interfaces/dtos/login-request'
 import { LoginResponse } from '@/interfaces/dtos/login-response'
 import { LoginResult } from '@/interfaces/login-result'

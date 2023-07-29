@@ -6,9 +6,9 @@
 
 <script lang="ts">
 import CurriculumForm from '@/components/CurriculumForm.vue'
-import { EVENT_CANCEL, EVENT_SKILL } from '@/consts/events.const'
-import { Skill } from '@/models/skill.model'
-import { fieldRequired } from '@/functions/validations.function'
+import { EVENT_CANCEL, EVENT_SKILL } from '@/consts/event-consts'
+import { Skill } from '@/models/skill'
+import { fieldRequired } from '@/functions/validations'
 
 export default {
   name: 'SkillForm',

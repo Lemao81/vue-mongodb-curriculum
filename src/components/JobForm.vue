@@ -16,10 +16,10 @@
 <script lang="ts">
 import CurriculumForm from '@/components/CurriculumForm.vue'
 import DateRangePicker from '@/components/DateRangePicker.vue'
-import { EVENT_CANCEL, EVENT_JOB } from '@/consts/events.const'
+import { EVENT_CANCEL, EVENT_JOB } from '@/consts/event-consts'
 import '@vuepic/vue-datepicker/dist/main.css'
-import { fieldRequired } from '@/functions/validations.function'
-import { Job } from '@/models/job.model'
+import { fieldRequired } from '@/functions/validations'
+import { Job } from '@/models/job'
 
 export default {
   name: 'JobForm',

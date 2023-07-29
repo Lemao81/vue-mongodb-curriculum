@@ -15,10 +15,10 @@
 
 <script lang="ts">
 import CurriculumForm from '@/components/CurriculumForm.vue'
-import { EVENT_CANCEL, EVENT_EDUCATION } from '@/consts/events.const'
+import { EVENT_CANCEL, EVENT_EDUCATION } from '@/consts/event-consts'
 import DateRangePicker from '@/components/DateRangePicker.vue'
-import { fieldRequired } from '@/functions/validations.function'
-import { Education } from '@/models/education.model'
+import { fieldRequired } from '@/functions/validations'
+import { Education } from '@/models/education'
 
 export default {
   name: 'EducationForm',

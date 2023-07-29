@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { fieldRequired } from '@/functions/validations.function'
+import { fieldRequired } from '@/functions/validations'
 
 export default {
   name: 'UsernameField',

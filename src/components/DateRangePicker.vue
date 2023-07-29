@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import VueDatePicker from '@vuepic/vue-datepicker'
-import { MonthYear } from '@/interfaces/month-year.interface'
+import { MonthYear } from '@/interfaces/month-year'
 
 export default {
   name: 'DateRangePicker',

@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { EVENT_CANCEL, EVENT_OK } from '@/consts/events.const'
+import { EVENT_CANCEL, EVENT_OK } from '@/consts/event-consts'
 
 export default {
   name: 'CurriculumForm',

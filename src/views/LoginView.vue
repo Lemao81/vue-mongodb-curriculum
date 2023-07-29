@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { fieldRequired } from '@/functions/validations.function'
+import { fieldRequired } from '@/functions/validations'
 import PasswordField from '@/components/PasswordField.vue'
 import UsernameField from '@/components/UsernameField.vue'
 import { useUserAuthStore } from '@/stores/user-auth-store'

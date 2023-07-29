@@ -16,9 +16,9 @@
 import SkillForm from '@/components/SkillForm.vue'
 import JobForm from '@/components/JobForm.vue'
 import EducationForm from '@/components/EducationForm.vue'
-import { Skill } from '@/models/skill.model'
-import { Job } from '@/models/job.model'
-import { Education } from '@/models/education.model'
+import { Skill } from '@/models/skill'
+import { Job } from '@/models/job'
+import { Education } from '@/models/education'
 
 export default {
   props: {

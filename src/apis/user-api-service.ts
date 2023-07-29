@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { USER_API_BASE_URL } from '@/consts/common.const'
+import { USER_API_BASE_URL } from '@/consts/common-consts'
 import { RegisterUserRequest } from '@/interfaces/dtos/register-user-request'
 import { RegisterUserResult } from '@/interfaces/register-user-result'
 import { RegisterUserResponse } from '@/interfaces/dtos/register-user-response'
