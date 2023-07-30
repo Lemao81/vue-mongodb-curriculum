@@ -7,6 +7,7 @@
         <v-text-field
           ref="passwordConfirmation"
           label="Confirm Password"
+          density="compact"
           v-model.trim="passwordConfirmation"
           :type="getPasswordFieldType()"
           :rules="[rules.required]"

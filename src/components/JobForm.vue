@@ -4,9 +4,9 @@
       <DateRangePicker v-model:start-date="startDate" v-model:end-date="endDate" v-model:is-current="isCurrent"></DateRangePicker>
       <v-row>
         <v-col cols="12">
-          <v-text-field ref="company" label="Company" v-model.trim="company" :rules="[rules.required]" required></v-text-field>
-          <v-text-field ref="jobTitle" label="Job title" v-model.trim="jobTitle" :rules="[rules.required]" required></v-text-field>
-          <v-textarea ref="description" label="Description" v-model.trim="description" :rules="[rules.required]" required></v-textarea>
+          <v-text-field ref="company" label="Company" density="compact" v-model.trim="company" :rules="[rules.required]" required></v-text-field>
+          <v-text-field ref="jobTitle" label="Job title" density="compact" v-model.trim="jobTitle" :rules="[rules.required]" required></v-text-field>
+          <v-textarea ref="description" label="Description" density="compact" v-model.trim="description" :rules="[rules.required]" required></v-textarea>
         </v-col>
       </v-row>
     </v-container>

@@ -4,9 +4,9 @@
       <DateRangePicker v-model:start-date="startDate" v-model:end-date="endDate" v-model:is-current="isCurrent"></DateRangePicker>
       <v-row>
         <v-col cols="12">
-          <v-text-field ref="institute" label="Institute" v-model.trim="institute" :rules="[rules.required]" required></v-text-field>
-          <v-text-field ref="degree" label="Degree" v-model.trim="degree" :rules="[rules.required]" required></v-text-field>
-          <v-text-field ref="grade" label="Grade" type="number" v-model.trim="grade" :rules="[rules.required]" required></v-text-field>
+          <v-text-field ref="institute" label="Institute" density="compact" v-model.trim="institute" :rules="[rules.required]" required></v-text-field>
+          <v-text-field ref="degree" label="Degree" density="compact" v-model.trim="degree" :rules="[rules.required]" required></v-text-field>
+          <v-text-field ref="grade" label="Grade" density="compact" type="number" v-model.trim="grade" :rules="[rules.required]" required></v-text-field>
         </v-col>
       </v-row>
     </v-container>

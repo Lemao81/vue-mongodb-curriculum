@@ -1,6 +1,7 @@
 <template>
   <curriculum-form @ok="onOk" @cancel="onCancel">
-    <v-text-field ref="skillInput" label="Skill" v-model.trim="skillName" :rules="[rules.required]" required></v-text-field>
+    <!--    <v-text-field ref="skillInput" label="Skill" v-model.trim="skillName" :rules="[rules.required]" required></v-text-field>-->
+    <v-combobox ref="skillInput" label="Skill" density="compact" @update:search="onUpdateSearch" :items="skills"></v-combobox>
   </curriculum-form>
 </template>
 
@@ -9,12 +10,14 @@ import CurriculumForm from '@/components/CurriculumForm.vue'
 import { EVENT_CANCEL, EVENT_SKILL } from '@/consts/event-consts'
 import { Skill } from '@/models/skill'
 import { fieldRequired } from '@/functions/validations'
+import { skillApiService } from '@/services/apis/skill-api-service'
 
 export default {
   name: 'SkillForm',
   data() {
     return {
       skillName: '',
+      skills: ['abc', 'def'],
       rules: {
         required: fieldRequired
       }
@@ -36,6 +39,12 @@ export default {
     },
     onCancel() {
       this.$emit(EVENT_CANCEL)
+    },
+    async onUpdateSearch(search: string) {
+      const result = await skillApiService.getSkillsStartingWith(search)
+      if (result.skills) {
+        this.skills = result.skills
+      }
     }
   },
   emits: [EVENT_SKILL, EVENT_CANCEL],

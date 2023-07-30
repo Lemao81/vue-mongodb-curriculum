@@ -4,6 +4,7 @@
       <v-text-field
         ref="password"
         label="Password"
+        density="compact"
         v-model.trim="passwordData"
         @input="onPasswordChange"
         :type="getPasswordFieldType()"
