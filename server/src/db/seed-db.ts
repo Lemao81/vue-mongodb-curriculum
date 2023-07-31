@@ -1,5 +1,5 @@
 import UserModel, { UserDocument } from './schemas/users'
-import { ENV_SA_PASSWORD } from '../consts/env-variables.const'
+import { ENV_SA_PASSWORD } from '../consts/env-variable-consts'
 import SkillModel, { Skill } from './schemas/skills'
 import { skills } from './skills-seed'
 

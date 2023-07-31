@@ -2,7 +2,7 @@ import UserModel, { UserDocument } from '../../db/schemas/users'
 import { LoginResult } from '../interfaces/login-result'
 import { createSha256Hash } from '../helpers'
 import * as jwt from 'jsonwebtoken'
-import { ENV_JWT_SECRET } from '../../consts/env-variables.const'
+import { ENV_JWT_SECRET } from '../../consts/env-variable-consts'
 
 class AuthService {
   async login(username: string, password: string): Promise<LoginResult> {

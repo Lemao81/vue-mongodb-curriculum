@@ -21,7 +21,7 @@ import router from './router'
 import { userApiService } from '@/services/apis/user-api-service'
 import { authApiService } from '@/services/apis/auth-api-service'
 import axios from 'axios'
-import { API_BASE_URL } from '@/consts/common-consts'
+import { API_BASE_URL } from '@/consts/base-url-consts'
 
 library.add(fas)
 

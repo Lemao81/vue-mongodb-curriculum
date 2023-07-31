@@ -26,6 +26,13 @@ export async function respondWithUnauthorized(ctx: KoaContext, next: Next) {
   await next()
 }
 
+export async function respondWithInternalServerError(ctx: KoaContext, next: Next) {
+  ctx.body = { error: 'Internal Server Error' }
+  ctx.status = HttpStatusCode.InternalServerError
+
+  await next()
+}
+
 export function createSha256Hash(input: string) {
   const hash = createHash('sha256')
   hash.update(input)

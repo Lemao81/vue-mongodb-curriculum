@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { AxiosResponse } from 'axios'
-import { AUTH_API_BASE_URL } from '@/consts/common-consts'
+import { AUTH_API_BASE_URL } from '@/consts/base-url-consts'
 import type { LoginRequest } from '@/interfaces/dtos/login-request'
 import type { LoginResponse } from '@/interfaces/dtos/login-response'
 import type { LoginResult } from '@/interfaces/login-result'

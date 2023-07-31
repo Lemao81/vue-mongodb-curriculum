@@ -1,6 +1,6 @@
 import type { GetSkillsResult } from '@/interfaces/get-skills-result'
 import axios from 'axios'
-import { SKILL_API_BASE_URL } from '@/consts/common-consts'
+import { SKILL_API_BASE_URL } from '@/consts/base-url-consts'
 import type { GetSkillsParams } from '@/interfaces/dtos/get-skills-params'
 import type { GetSkillsResponse } from '@/interfaces/dtos/get-skills-response'
 

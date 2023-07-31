@@ -1,6 +1,6 @@
 import axios from 'axios'
 import type { AxiosResponse } from 'axios'
-import { USER_API_BASE_URL } from '@/consts/common-consts'
+import { USER_API_BASE_URL } from '@/consts/base-url-consts'
 import type { RegisterUserRequest } from '@/interfaces/dtos/register-user-request'
 import type { RegisterUserResult } from '@/interfaces/register-user-result'
 import type { RegisterUserResponse } from '@/interfaces/dtos/register-user-response'

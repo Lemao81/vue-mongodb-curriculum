@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose'
-import { COLLECTION_SKILLS } from '../../consts/collections.const'
+import { COLLECTION_SKILLS } from '../../consts/collection-consts'
 
 export interface Skill {
   key: string

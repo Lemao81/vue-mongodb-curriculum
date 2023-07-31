@@ -6,6 +6,7 @@ const cors = require('@koa/cors')
 import * as json from 'koa-json'
 import registerUserEndpoints from './apis/user-api'
 import registerAuthEndpoints from './apis/auth-api'
+import registerSkillEndpoints from './apis/skill-api'
 
 export default async function startWebServer() {
   const app = new Koa()
@@ -19,6 +20,7 @@ export default async function startWebServer() {
 
   registerUserEndpoints(router)
   registerAuthEndpoints(router)
+  registerSkillEndpoints(router)
 
   app.use(cors())
   app.use(json())

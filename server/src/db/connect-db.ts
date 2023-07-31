@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { ENV_DB_PASSWORD, ENV_DB_USER } from '../consts/env-variables.const'
+import { ENV_DB_PASSWORD, ENV_DB_USER } from '../consts/env-variable-consts'
 
 export default async function connectDb(): Promise<boolean> {
   const dbUser = process.env[ENV_DB_USER]

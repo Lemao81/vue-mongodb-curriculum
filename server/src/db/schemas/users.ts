@@ -1,5 +1,5 @@
 import { Document, Schema, model } from 'mongoose'
-import { COLLECTION_USERS } from '../../consts/collections.const'
+import { COLLECTION_USERS } from '../../consts/collection-consts'
 
 export interface User {
   username: string

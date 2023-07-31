@@ -1,9 +1,9 @@
 import UserModel from '../../db/schemas/users'
-import { CreateResultOrError } from '../types'
+import { CreateResult } from '../types'
 import { createSha256Hash } from '../helpers'
 
 class UserService {
-  async createUser(username: string, password: string): Promise<CreateResultOrError> {
+  async createUser(username: string, password: string): Promise<CreateResult> {
     const existing = await UserModel.findOne({ username: username })
     if (existing) {
       return {

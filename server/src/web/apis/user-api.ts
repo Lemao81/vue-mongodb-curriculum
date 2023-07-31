@@ -5,11 +5,10 @@ import userService from '../services/user-service'
 import { CreateUserRequest } from '../dtos/create-user-request'
 import { HttpStatusCode } from 'axios'
 import { parseBody, respondWithBadRequest } from '../helpers'
-
-const baseUrl = '/api/users'
+import { USER_API_BASE_PATH } from '../../consts/base-path-consts'
 
 export default function registerUserEndpoints(router: Router) {
-  router.post('/api/users', createUser)
+  router.post(USER_API_BASE_PATH, createUser)
 }
 
 async function createUser(ctx: KoaContext, next: Next) {
@@ -20,14 +19,14 @@ async function createUser(ctx: KoaContext, next: Next) {
     return
   }
 
-  const userOrError = await userService.createUser(createRequest.username, createRequest.password)
-  if (userOrError.error) {
-    await respondWithBadRequest(ctx, next, userOrError.error)
+  const result = await userService.createUser(createRequest.username, createRequest.password)
+  if (result.error) {
+    await respondWithBadRequest(ctx, next, result.error)
 
     return
   }
 
-  ctx.body = { url: `${baseUrl}/${userOrError.id}` }
+  ctx.body = { url: `${USER_API_BASE_PATH}/${result.id}` }
   ctx.status = HttpStatusCode.Created
 
   await next()
