@@ -9,7 +9,7 @@
       item-title="label"
       item-value="key"
       @update:search="onUpdateSearch"
-      @update:model-value="onSkillSelected"
+      @update:model-value="onSkillChange"
     ></v-combobox>
   </curriculum-form>
 </template>
@@ -25,7 +25,7 @@ export default {
   name: 'SkillForm',
   data() {
     return {
-      skillName: '',
+      skill: null,
       skills: [],
       rules: {
         required: fieldRequired
@@ -34,17 +34,12 @@ export default {
   },
   methods: {
     onOk() {
-      const isValid = this.$refs.skillInput.checkValidity()
-      if (!isValid) {
-        this.$toast.warning('Input NOK')
-
+      if (this.skill) {
+        this.$emit(EVENT_SKILL, this.skill)
         return
       }
 
-      if (this.skillName) {
-        const skill = new Skill(this.skillName)
-        this.$emit(EVENT_SKILL, skill)
-      }
+      this.$toast.warning('No valid selection')
     },
     onCancel() {
       this.$emit(EVENT_CANCEL)
@@ -55,10 +50,8 @@ export default {
         this.skills = result.skills
       }
     },
-    onSkillSelected(selection: any) {
-      if (selection instanceof Skill) {
-        console.log(selection)
-      }
+    onSkillChange(value: any) {
+      this.skill = value instanceof Skill ? value : null
     }
   },
   emits: [EVENT_SKILL, EVENT_CANCEL],

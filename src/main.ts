@@ -20,6 +20,7 @@ import App from './App.vue'
 import router from './router'
 import { userApiService } from '@/services/apis/user-api-service'
 import { authApiService } from '@/services/apis/auth-api-service'
+import { curriculumApiService } from '@/services/apis/curriculum-api-service'
 import axios from 'axios'
 import { API_BASE_URL } from '@/consts/base-url-consts'
 
@@ -47,5 +48,6 @@ app.use(ToastPlugin, toastOptions)
 
 app.config.globalProperties.$userApi = userApiService
 app.config.globalProperties.$authApi = authApiService
+app.config.globalProperties.$curriculumApi = curriculumApiService
 
 app.mount('#app')

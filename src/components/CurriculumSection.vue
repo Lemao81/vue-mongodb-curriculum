@@ -19,8 +19,14 @@ import EducationForm from '@/components/EducationForm.vue'
 import { Skill } from '@/models/skill'
 import { Job } from '@/models/job'
 import { Education } from '@/models/education'
+import { useUserAuthStore } from '@/stores/user-auth-store'
 
 export default {
+  setup() {
+    return {
+      userAuthStore: useUserAuthStore()
+    }
+  },
   props: {
     title: {
       type: String,
@@ -40,8 +46,11 @@ export default {
     onAdd() {
       this.isEdit = true
     },
-    onSkill(skill: Skill) {
-      console.log(skill)
+    async onSkill(skill: Skill) {
+      const result = await this.$curriculumApi.addSkill(this.userAuthStore.userId, skill)
+      if (result.error) {
+        this.$toast.warning(result.error)
+      }
       this.isEdit = false
     },
     onJob(job: Job) {
