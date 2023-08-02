@@ -1,7 +1,9 @@
 export class Skill {
-  name: string
+  key: string
+  label: string
 
-  constructor(name: string) {
-    this.name = name || ''
+  constructor(key: string, label: string) {
+    this.key = key
+    this.label = label
   }
 }

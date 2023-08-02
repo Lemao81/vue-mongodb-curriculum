@@ -1,7 +1,16 @@
 <template>
   <curriculum-form @ok="onOk" @cancel="onCancel">
     <!--    <v-text-field ref="skillInput" label="Skill" v-model.trim="skillName" :rules="[rules.required]" required></v-text-field>-->
-    <v-combobox ref="skillInput" label="Skill" density="compact" @update:search="onUpdateSearch" :items="skills"></v-combobox>
+    <v-combobox
+      ref="skillInput"
+      label="Skill"
+      density="compact"
+      :items="skills"
+      item-title="label"
+      item-value="key"
+      @update:search="onUpdateSearch"
+      @update:model-value="onSkillSelected"
+    ></v-combobox>
   </curriculum-form>
 </template>
 
@@ -17,7 +26,7 @@ export default {
   data() {
     return {
       skillName: '',
-      skills: ['abc', 'def'],
+      skills: [],
       rules: {
         required: fieldRequired
       }
@@ -44,6 +53,11 @@ export default {
       const result = await skillApiService.getSkillsStartingWith(search)
       if (result.skills) {
         this.skills = result.skills
+      }
+    },
+    onSkillSelected(selection: any) {
+      if (selection instanceof Skill) {
+        console.log(selection)
       }
     }
   },

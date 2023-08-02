@@ -1,6 +1,6 @@
-import type { SkillDto } from '@/interfaces/dtos/skill-dto'
+import { Skill } from "@/models/skill";
 
 export interface GetSkillsResult {
-  skills?: SkillDto[]
+  skills?: Skill[]
   error?: string
 }
