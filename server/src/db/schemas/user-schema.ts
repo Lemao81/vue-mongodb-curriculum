@@ -1,5 +1,5 @@
 import { Document, Schema, model } from 'mongoose'
-import { COLLECTION_USERS } from '../../consts/collection-consts'
+import { USER_MODEL_NAME } from '../../consts/model-name-consts'
 
 export interface User {
   username: string
@@ -10,7 +10,7 @@ export interface User {
 
 export interface UserDocument extends User, Document {}
 
-const userSchema = new Schema({
+export const userSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -31,5 +31,4 @@ const userSchema = new Schema({
   }
 })
 
-const UserModel = model(COLLECTION_USERS, userSchema)
-export default UserModel
+export const UserModel = model(USER_MODEL_NAME, userSchema)

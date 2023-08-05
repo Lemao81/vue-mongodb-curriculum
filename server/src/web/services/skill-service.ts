@@ -1,4 +1,4 @@
-import SkillModel, { Skill } from '../../db/schemas/skills'
+import { SkillModel, Skill } from '../../db/schemas/skill-schema'
 import { GetListResult } from '../types'
 
 class SkillService {

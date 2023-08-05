@@ -1,4 +1,4 @@
-import { Skill } from './schemas/skills'
+import { Skill } from './schemas/skill-schema'
 
 export const skills: Skill[] = [
   {

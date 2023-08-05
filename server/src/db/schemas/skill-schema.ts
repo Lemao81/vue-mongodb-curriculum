@@ -1,5 +1,5 @@
-import { model, Schema } from 'mongoose'
-import { COLLECTION_SKILLS } from '../../consts/collection-consts'
+import { model, Schema, Document } from 'mongoose'
+import { SKILL_MODEL_NAME } from "../../consts/model-name-consts";
 
 export interface Skill {
   key: string
@@ -10,7 +10,7 @@ export interface Skill {
 
 export interface SkillDocument extends Skill, Document {}
 
-const skillSchema = new Schema({
+export const skillSchema = new Schema({
   key: {
     type: String,
     required: true
@@ -30,5 +30,4 @@ const skillSchema = new Schema({
   }
 })
 
-const SkillModel = model(COLLECTION_SKILLS, skillSchema)
-export default SkillModel
+export const SkillModel = model(SKILL_MODEL_NAME, skillSchema)

@@ -1,4 +1,4 @@
-import UserModel, { UserDocument } from '../../db/schemas/users'
+import { UserModel, UserDocument } from '../../db/schemas/user-schema'
 import { LoginResult } from '../interfaces/login-result'
 import { createSha256Hash } from '../helpers'
 import * as jwt from 'jsonwebtoken'

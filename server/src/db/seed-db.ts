@@ -1,6 +1,6 @@
-import UserModel, { UserDocument } from './schemas/users'
+import { UserModel, UserDocument } from './schemas/user-schema'
 import { ENV_SA_PASSWORD } from '../consts/env-variable-consts'
-import SkillModel, { Skill } from './schemas/skills'
+import { SkillModel, Skill } from './schemas/skill-schema'
 import { skills } from './skills-seed'
 
 export default async function seedDb(): Promise<void> {

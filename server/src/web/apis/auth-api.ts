@@ -2,7 +2,7 @@ import * as Router from 'koa-router'
 import { KoaContext } from '../types'
 import { Next } from 'koa'
 import { parseBody, respondWithBadRequest, respondWithUnauthorized } from '../helpers'
-import { LoginRequest } from '../dtos/login-request'
+import { LoginRequest } from '../interfaces/dtos/login-request'
 import authService from '../services/auth-service'
 import { HttpStatusCode } from 'axios'
 
