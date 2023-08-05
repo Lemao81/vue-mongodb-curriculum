@@ -26,8 +26,10 @@ class CurriculumService {
         return { notFound: true }
       }
 
-      curriculum.skills.push(skill)
-      curriculum = await curriculum.save()
+      if (!curriculum.skills.some((s) => s.key === key)) {
+        curriculum.skills.push(skill)
+        curriculum = await curriculum.save()
+      }
 
       return { curriculum: curriculum }
     } catch (error) {

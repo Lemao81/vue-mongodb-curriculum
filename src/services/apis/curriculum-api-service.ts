@@ -8,7 +8,7 @@ export class CurriculumApiService {
   async addSkill(userId: string, skill: Skill): Promise<AddSkillResult> {
     const request: AddSkillRequest = {
       userId,
-      skill
+      key: skill.key
     }
 
     try {

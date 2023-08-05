@@ -2,6 +2,8 @@ import { KoaContext } from './types'
 import { HttpStatusCode } from 'axios'
 import { Next } from 'koa'
 import { createHash } from 'crypto'
+import { AuthorizationResult } from './interfaces/authorization-result'
+import authService from './services/auth-service'
 
 export function parseBody<T>(ctx: KoaContext): T | null {
   const body = (<any>ctx.request).body
@@ -10,6 +12,20 @@ export function parseBody<T>(ctx: KoaContext): T | null {
   }
 
   return null
+}
+
+export function verifyAuthorization(ctx: KoaContext): AuthorizationResult {
+  const token = extractAuthorizationToken(ctx)
+  if (!token) {
+    return { isAuthorized: false }
+  }
+
+  const payload = authService.validateAuthorizationToken(token)
+  if (!payload) {
+    return { isAuthorized: false }
+  }
+
+  return { isAuthorized: true, tokenPayload: payload }
 }
 
 export async function respondWithBadRequest(ctx: KoaContext, next: Next, message: string) {
@@ -45,4 +61,12 @@ export function createSha256Hash(input: string) {
   hash.update(input)
 
   return hash.digest('hex')
+}
+
+function extractAuthorizationToken(ctx: KoaContext): string | null {
+  if (!ctx.request.headers.authorization?.startsWith('Bearer ')) {
+    return null
+  }
+
+  return ctx.request.headers.authorization.slice('Bearer '.length)
 }

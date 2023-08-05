@@ -2,7 +2,7 @@ import * as Router from 'koa-router'
 import { CURRICULUM_API_BASE_PATH } from '../../consts/base-path-consts'
 import { KoaContext } from '../types'
 import { Next } from 'koa'
-import { parseBody, respondWithBadRequest, respondWithInternalServerError, respondWithNotFound } from '../helpers'
+import { parseBody, respondWithBadRequest, respondWithInternalServerError, respondWithNotFound, respondWithUnauthorized, verifyAuthorization } from '../helpers'
 import { AddSkillRequest } from '../interfaces/dtos/add-skill-request'
 import curriculumService from '../services/curriculum-service'
 import { HttpStatusCode } from 'axios'
@@ -12,6 +12,13 @@ export default function registerCurriculumEndpoints(router: Router) {
 }
 
 async function addSkill(ctx: KoaContext, next: Next) {
+  const { isAuthorized, tokenPayload } = verifyAuthorization(ctx)
+  if (!isAuthorized) {
+    await respondWithUnauthorized(ctx, next)
+
+    return
+  }
+
   const request = parseBody<AddSkillRequest>(ctx)
   if (!request?.key) {
     await respondWithBadRequest(ctx, next, 'Request body NOK')
@@ -19,7 +26,7 @@ async function addSkill(ctx: KoaContext, next: Next) {
     return
   }
 
-  const result = await curriculumService.addSkill('', request.key)
+  const result = await curriculumService.addSkill(tokenPayload.userId, request.key)
   if (result.error) {
     await respondWithInternalServerError(ctx, next, result.error)
 
