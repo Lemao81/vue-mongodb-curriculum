@@ -1,5 +1,6 @@
 import './assets/main.css'
-import ToastPlugin, { ToastProps } from 'vue-toast-notification'
+import ToastPlugin from 'vue-toast-notification'
+import type { ToastProps } from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-bootstrap.css'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -23,15 +24,14 @@ import { authApiService } from '@/services/apis/auth-api-service'
 import { curriculumApiService } from '@/services/apis/curriculum-api-service'
 import axios from 'axios'
 import { API_BASE_URL } from '@/consts/base-url-consts'
+import appendRequestAuthorization from '@/interceptors/request-authorization-interceptor'
 
 library.add(fas)
 
 axios.defaults.baseURL = API_BASE_URL
+axios.interceptors.request.use(appendRequestAuthorization, null, { runWhen: (request) => request.url?.startsWith(API_BASE_URL) || false })
 
-const vuetify = createVuetify({
-  components,
-  directives
-})
+const vuetify = createVuetify({ components, directives })
 
 const app = createApp(App).component('fai', FontAwesomeIcon).component('VueDatePicker', VueDatePicker)
 app.config.errorHandler = (error) => console.error(`Global: ${JSON.stringify(error)}`)
