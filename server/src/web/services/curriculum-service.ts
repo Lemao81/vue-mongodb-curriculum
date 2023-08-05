@@ -2,14 +2,12 @@ import { CurriculumModel, CurriculumDocument } from '../../db/schemas/curriculum
 import { AddSectionResult } from '../interfaces/add-section-result'
 import { SkillModel, SkillDocument } from '../../db/schemas/skill-schema'
 import { Types } from 'mongoose'
-import { AddCurriculumResult } from '../interfaces/add-curriculum-result'
+import { CreateResult } from '../types'
 
 class CurriculumService {
-  async createCurriculum(userId: Types.ObjectId): Promise<AddCurriculumResult> {
+  async createCurriculum(userId: Types.ObjectId): Promise<CreateResult> {
     try {
-      const curriculum = await CurriculumModel.create({ userId })
-
-      return { curriculum }
+      return await CurriculumModel.create({ userId })
     } catch (error) {
       return { error: error?.message || 'Error during curriculum creation' }
     }
