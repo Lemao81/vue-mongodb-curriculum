@@ -1,4 +1,4 @@
-import UserModel from '../../db/schemas/users'
+import { UserModel } from '../../db/schemas/user-schema'
 import { CreateResult } from '../types'
 import { createSha256Hash } from '../helpers'
 
@@ -13,10 +13,7 @@ class UserService {
 
     const passwordHash = createSha256Hash(password)
 
-    return await UserModel.create({
-      username,
-      passwordHash
-    })
+    return await UserModel.create({ username, passwordHash })
   }
 }
 

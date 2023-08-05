@@ -26,9 +26,16 @@ export async function respondWithUnauthorized(ctx: KoaContext, next: Next) {
   await next()
 }
 
-export async function respondWithInternalServerError(ctx: KoaContext, next: Next) {
-  ctx.body = { error: 'Internal Server Error' }
+export async function respondWithInternalServerError(ctx: KoaContext, next: Next, message?: string) {
+  ctx.body = { error: message || 'Internal Server Error' }
   ctx.status = HttpStatusCode.InternalServerError
+
+  await next()
+}
+
+export async function respondWithNotFound(ctx: KoaContext, next: Next) {
+  ctx.body = { error: 'NotFound' }
+  ctx.status = HttpStatusCode.NotFound
 
   await next()
 }

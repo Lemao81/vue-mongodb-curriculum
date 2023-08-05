@@ -12,7 +12,7 @@ export class CurriculumApiService {
     }
 
     try {
-      await axios.post(`${CURRICULUM_API_BASE_URL}/skill`, request)
+      await axios.post(`${CURRICULUM_API_BASE_URL}/skills`, request)
 
       return { isSuccess: true }
     } catch (error: any) {

@@ -7,6 +7,7 @@ import * as json from 'koa-json'
 import registerUserEndpoints from './apis/user-api'
 import registerAuthEndpoints from './apis/auth-api'
 import registerSkillEndpoints from './apis/skill-api'
+import registerCurriculumEndpoints from './apis/curriculum-api'
 
 export default async function startWebServer() {
   const app = new Koa()
@@ -21,6 +22,7 @@ export default async function startWebServer() {
   registerUserEndpoints(router)
   registerAuthEndpoints(router)
   registerSkillEndpoints(router)
+  registerCurriculumEndpoints(router)
 
   app.use(cors())
   app.use(json())
