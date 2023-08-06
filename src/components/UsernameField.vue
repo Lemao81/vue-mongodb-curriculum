@@ -11,6 +11,7 @@
 
 <script lang="ts">
 import { fieldRequired } from '@/functions/validations'
+import type { VTextField } from "vuetify/components";
 
 export default {
   name: 'UsernameField',
@@ -33,7 +34,7 @@ export default {
       this.$emit('update:username', this.usernameData)
     },
     checkValidity(): boolean {
-      return this.$refs.username.checkValidity()
+      return (this.$refs.username as VTextField).checkValidity()
     }
   },
   emits: ['update:username']

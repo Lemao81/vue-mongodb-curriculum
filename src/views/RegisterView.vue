@@ -30,6 +30,7 @@
 import { fieldRequired } from '@/functions/validations'
 import PasswordField from '@/components/PasswordField.vue'
 import UsernameField from '@/components/UsernameField.vue'
+import type { VTextField } from 'vuetify/components'
 
 export default {
   name: 'RegisterView',
@@ -50,7 +51,10 @@ export default {
       return this.showPassword ? 'text' : 'password'
     },
     async onRegister() {
-      const isValid = this.$refs.username.checkValidity() && this.$refs.password.checkValidity() && this.$refs.passwordConfirmation.checkValidity()
+      const isValid =
+        (this.$refs.username as VTextField).checkValidity() &&
+        (this.$refs.password as VTextField).checkValidity() &&
+        (this.$refs.passwordConfirmation as VTextField).checkValidity()
       if (!isValid) {
         this.$toast.warning('Input NOK')
         return

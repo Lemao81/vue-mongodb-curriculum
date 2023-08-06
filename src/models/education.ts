@@ -1,12 +1,12 @@
 export class Education {
-  startDate: Date | null
-  endDate: Date | null
+  startDate: Date | undefined
+  endDate: Date | undefined
   isCurrent: boolean
   institute: string
   degree: string
   grade: number
 
-  constructor(startDate: Date | null, endDate: Date | null, isCurrent: boolean, institute: string, degree: string, grade: number) {
+  constructor(startDate: Date | undefined, endDate: Date | undefined, isCurrent: boolean, institute: string, degree: string, grade: number) {
     this.startDate = startDate
     this.endDate = endDate
     this.isCurrent = isCurrent

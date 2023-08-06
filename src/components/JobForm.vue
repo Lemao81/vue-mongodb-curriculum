@@ -20,13 +20,15 @@ import { EVENT_CANCEL, EVENT_JOB } from '@/consts/event-consts'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { fieldRequired } from '@/functions/validations'
 import { Job } from '@/models/job'
+import type { VTextField } from 'vuetify/components'
+import type { JobFormComponentData } from '@/interfaces/job-form-component-data'
 
 export default {
   name: 'JobForm',
-  data() {
+  data(): JobFormComponentData {
     return {
-      startDate: null,
-      endDate: null,
+      startDate: undefined,
+      endDate: undefined,
       isCurrent: false,
       company: '',
       jobTitle: '',
@@ -41,9 +43,9 @@ export default {
       const isValid =
         !!this.startDate &&
         (this.isCurrent || !!this.endDate) &&
-        this.$refs.company.checkValidity() &&
-        this.$refs.jobTitle.checkValidity() &&
-        this.$refs.description.checkValidity()
+        (this.$refs.company as VTextField).checkValidity() &&
+        (this.$refs.jobTitle as VTextField).checkValidity() &&
+        (this.$refs.description as VTextField).checkValidity()
       if (!isValid) {
         this.$toast.warning('Input NOK')
 

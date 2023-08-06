@@ -1,12 +1,12 @@
 export class Job {
-  startDate: Date | null
-  endDate: Date | null
+  startDate: Date | undefined
+  endDate: Date | undefined
   isCurrent: boolean
   company: string
   jobTitle: string
   description: string
 
-  constructor(startDate: Date | null, endDate: Date | null, isCurrent: boolean, company: string, jobTitle: string, description: string) {
+  constructor(startDate: Date | undefined, endDate: Date | undefined, isCurrent: boolean, company: string, jobTitle: string, description: string) {
     this.startDate = startDate
     this.endDate = endDate
     this.isCurrent = isCurrent

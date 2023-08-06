@@ -15,8 +15,9 @@ import { fieldRequired } from '@/functions/validations'
 import PasswordField from '@/components/PasswordField.vue'
 import UsernameField from '@/components/UsernameField.vue'
 import { useUserAuthStore } from '@/stores/user-auth-store'
-import { AccessTokenPayload } from '@/interfaces/access-token-payload'
+import type { AccessTokenPayload } from '@/interfaces/access-token-payload'
 import { extractJwtPayload } from '@/helpers/helper'
+import type { VTextField } from 'vuetify/components'
 
 export default {
   name: 'LoginView',
@@ -36,7 +37,7 @@ export default {
   },
   methods: {
     async onLogin() {
-      const isValid = this.$refs.username.checkValidity() && this.$refs.password.checkValidity()
+      const isValid = (this.$refs.username as VTextField).checkValidity() && (this.$refs.password as VTextField).checkValidity()
       if (!isValid) {
         this.$toast.warning('Input NOK')
 

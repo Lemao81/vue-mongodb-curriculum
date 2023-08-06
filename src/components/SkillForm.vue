@@ -1,6 +1,5 @@
 <template>
   <curriculum-form @ok="onOk" @cancel="onCancel">
-    <!--    <v-text-field ref="skillInput" label="Skill" v-model.trim="skillName" :rules="[rules.required]" required></v-text-field>-->
     <v-combobox
       ref="skillInput"
       label="Skill"
@@ -20,13 +19,14 @@ import { EVENT_CANCEL, EVENT_SKILL } from '@/consts/event-consts'
 import { Skill } from '@/models/skill'
 import { fieldRequired } from '@/functions/validations'
 import { skillApiService } from '@/services/apis/skill-api-service'
+import type { SkillFormComponentData } from '@/interfaces/skill-form-component-data'
 
 export default {
   name: 'SkillForm',
-  data() {
+  data(): SkillFormComponentData {
     return {
       skill: null,
-      skills: [],
+      skills: new Array<Skill>(),
       rules: {
         required: fieldRequired
       }

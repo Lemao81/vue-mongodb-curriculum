@@ -19,13 +19,15 @@ import { EVENT_CANCEL, EVENT_EDUCATION } from '@/consts/event-consts'
 import DateRangePicker from '@/components/DateRangePicker.vue'
 import { fieldRequired } from '@/functions/validations'
 import { Education } from '@/models/education'
+import type { VTextField } from 'vuetify/components'
+import type { EducationFormComponentData } from '@/interfaces/education-form-component-data'
 
 export default {
   name: 'EducationForm',
-  data() {
+  data(): EducationFormComponentData {
     return {
-      startDate: null,
-      endDate: null,
+      startDate: undefined,
+      endDate: undefined,
       isCurrent: false,
       institute: '',
       degree: '',
@@ -40,9 +42,9 @@ export default {
       const isValid =
         !!this.startDate &&
         (this.isCurrent || !!this.endDate) &&
-        this.$refs.institute.checkValidity() &&
-        this.$refs.degree.checkValidity() &&
-        this.$refs.grade.checkValidity()
+        (this.$refs.institute as VTextField).checkValidity() &&
+        (this.$refs.degree as VTextField).checkValidity() &&
+        (this.$refs.grade as VTextField).checkValidity()
       if (!isValid) {
         this.$toast.warning('Input NOK')
 

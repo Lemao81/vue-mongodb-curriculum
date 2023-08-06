@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import { fieldRequired } from '@/functions/validations'
+import type { VTextField } from "vuetify/components";
 
 export default {
   name: 'PasswordField',
@@ -54,7 +55,7 @@ export default {
       this.$emit('update:showPassword', this.showPasswordData)
     },
     checkValidity(): boolean {
-      return this.$refs.password.checkValidity()
+      return (this.$refs.password as VTextField).checkValidity()
     }
   },
   emits: ['update:password', 'update:showPassword']
