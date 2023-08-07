@@ -1,6 +1,6 @@
 import type { Curriculum } from '@/models/curriculum'
 
-export interface AddSkillResult {
+export interface GetCurriculumResult {
   error?: string
   curriculum?: Curriculum
 }
