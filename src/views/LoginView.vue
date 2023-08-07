@@ -18,12 +18,14 @@ import { useUserAuthStore } from '@/stores/user-auth-store'
 import type { AccessTokenPayload } from '@/interfaces/access-token-payload'
 import { extractJwtPayload } from '@/helpers/helper'
 import type { VTextField } from 'vuetify/components'
+import { useCurriculumStore } from '@/stores/curriculum-store'
 
 export default {
   name: 'LoginView',
   setup() {
     return {
-      userAuthStore: useUserAuthStore()
+      userAuthStore: useUserAuthStore(),
+      curriculumStore: useCurriculumStore()
     }
   },
   data() {
@@ -63,6 +65,14 @@ export default {
         accessToken: result.accessToken,
         isAuthenticated: true
       })
+
+      const curriculumResult = await this.$curriculumApi.getCurriculum(payload.userId)
+      if (curriculumResult.curriculum) {
+        this.curriculumStore.$patch({
+          curriculum: curriculumResult.curriculum
+        })
+      }
+
       this.$router.push('/curriculum')
     }
   },

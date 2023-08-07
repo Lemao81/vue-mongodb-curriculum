@@ -13,12 +13,14 @@
 <script lang="ts">
 import { useUserAuthStore } from '@/stores/user-auth-store'
 import { mapState } from 'pinia'
+import { useCurriculumStore } from '@/stores/curriculum-store'
 
 export default {
   name: 'HeaderBar',
   setup() {
     return {
-      userAuthStore: useUserAuthStore()
+      userAuthStore: useUserAuthStore(),
+      curriculumStore: useCurriculumStore()
     }
   },
   computed: {
@@ -29,6 +31,7 @@ export default {
   methods: {
     onLogout() {
       this.userAuthStore.$reset()
+      this.curriculumStore.$reset()
       this.$router.push('/')
     }
   }
