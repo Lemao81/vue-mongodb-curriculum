@@ -1,7 +1,7 @@
 <template>
   <v-container class="login-container">
     <UsernameField ref="username" v-model:username="username" />
-    <PasswordField ref="password" v-model:password="password" />
+    <PasswordField ref="password" v-model:password="password" @enter-pressed="onEnterPressed" />
     <v-row align="center" justify="center">
       <v-col cols="2">
         <v-btn @click="onLogin">Login</v-btn>
@@ -74,6 +74,9 @@ export default {
       }
 
       this.$router.push('/curriculum')
+    },
+    onEnterPressed() {
+      this.onLogin()
     }
   },
   components: { UsernameField, PasswordField }

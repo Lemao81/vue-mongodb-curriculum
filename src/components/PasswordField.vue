@@ -7,6 +7,7 @@
         density="compact"
         v-model.trim="passwordData"
         @input="onPasswordChange"
+        v-on:keyup.enter="onEnterPressed"
         :type="getPasswordFieldType()"
         :rules="[rules.required]"
         required
@@ -20,7 +21,7 @@
 
 <script lang="ts">
 import { fieldRequired } from '@/functions/validations'
-import type { VTextField } from "vuetify/components";
+import type { VTextField } from 'vuetify/components'
 
 export default {
   name: 'PasswordField',
@@ -54,11 +55,14 @@ export default {
       this.showPasswordData = !this.showPasswordData
       this.$emit('update:showPassword', this.showPasswordData)
     },
+    onEnterPressed() {
+      this.$emit('enterPressed')
+    },
     checkValidity(): boolean {
       return (this.$refs.password as VTextField).checkValidity()
     }
   },
-  emits: ['update:password', 'update:showPassword']
+  emits: ['update:password', 'update:showPassword', 'enterPressed']
 }
 </script>
 
