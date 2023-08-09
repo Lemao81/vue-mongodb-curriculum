@@ -1,9 +1,8 @@
 import { CurriculumModel, CurriculumDocument } from '../../db/schemas/curriculum-schema'
-import { AddSectionResult } from '../interfaces/add-section-result'
 import { SkillModel, SkillDocument } from '../../db/schemas/skill-schema'
 import { Types } from 'mongoose'
 import { CreateResult } from '../types'
-import { GetCurriculumResult } from '../interfaces/get-curriculum-result'
+import { CurriculumResult } from '../interfaces/curriculum-result'
 
 class CurriculumService {
   async createCurriculum(userId: Types.ObjectId): Promise<CreateResult> {
@@ -14,7 +13,7 @@ class CurriculumService {
     }
   }
 
-  async getCurriculum(userIdString: string): Promise<GetCurriculumResult> {
+  async getCurriculum(userIdString: string): Promise<CurriculumResult> {
     try {
       const userId = new Types.ObjectId(userIdString)
       const curriculum: CurriculumDocument = await CurriculumModel.findOne({ userId: userId })
@@ -22,21 +21,17 @@ class CurriculumService {
         return { notFound: true }
       }
 
-      return { curriculum: curriculum }
+      return { curriculum }
     } catch (error) {
       return { error: error?.message || 'Error during curriculum query' }
     }
   }
 
-  async addSkill(userIdString: string, key: string): Promise<AddSectionResult> {
+  async addSkill(userIdString: string, key: string): Promise<CurriculumResult> {
     try {
       const curriculumResult = await this.getCurriculum(userIdString)
-      if (curriculumResult.error) {
-        return { error: curriculumResult.error }
-      }
-
-      if (curriculumResult.notFound) {
-        return { notFound: true }
+      if (!curriculumResult.curriculum) {
+        return curriculumResult
       }
 
       let curriculum = curriculumResult.curriculum
@@ -51,9 +46,26 @@ class CurriculumService {
         curriculum = await curriculum.save()
       }
 
-      return { curriculum: curriculum }
+      return { curriculum }
     } catch (error) {
       return { error: error?.message || 'Error during skill addition' }
+    }
+  }
+
+  async removeSkill(userIdString: string, key: string): Promise<CurriculumResult> {
+    try {
+      const curriculumResult = await this.getCurriculum(userIdString)
+      if (!curriculumResult.curriculum) {
+        return curriculumResult
+      }
+
+      let curriculum = curriculumResult.curriculum
+      curriculum.skills = curriculum.skills.filter((s) => s.key !== key)
+      curriculum = await curriculum.save()
+
+      return { curriculum }
+    } catch (error) {
+      return { error: error?.message || 'Error during skill removal' }
     }
   }
 }

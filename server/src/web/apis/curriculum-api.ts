@@ -6,10 +6,12 @@ import { parseBody, respondWithBadRequest, respondWithInternalServerError, respo
 import { AddSkillRequest } from '../interfaces/dtos/add-skill-request'
 import curriculumService from '../services/curriculum-service'
 import { HttpStatusCode } from 'axios'
+import { CurriculumResult } from '../interfaces/curriculum-result'
 
 export default function registerCurriculumEndpoints(router: Router) {
   router.get(`${CURRICULUM_API_BASE_PATH}`, getCurriculum)
   router.post(`${CURRICULUM_API_BASE_PATH}/skills`, addSkill)
+  router.delete(`${CURRICULUM_API_BASE_PATH}/skills/:key`, removeSkill)
 }
 
 async function getCurriculum(ctx: KoaContext, next: Next) {
@@ -21,22 +23,7 @@ async function getCurriculum(ctx: KoaContext, next: Next) {
   }
 
   const result = await curriculumService.getCurriculum(tokenPayload.userId)
-  if (result.error) {
-    await respondWithInternalServerError(ctx, next, result.error)
-
-    return
-  }
-
-  if (result.notFound) {
-    await respondWithNotFound(ctx, next)
-
-    return
-  }
-
-  ctx.body = result.curriculum
-  ctx.status = HttpStatusCode.Ok
-
-  await next()
+  await handleCurriculumResult(ctx, next, result)
 }
 
 async function addSkill(ctx: KoaContext, next: Next) {
@@ -55,6 +42,27 @@ async function addSkill(ctx: KoaContext, next: Next) {
   }
 
   const result = await curriculumService.addSkill(tokenPayload.userId, request.key)
+  await handleCurriculumResult(ctx, next, result)
+}
+
+async function removeSkill(ctx: KoaContext, next: Next) {
+  const { isAuthorized, tokenPayload } = verifyAuthorization(ctx)
+  if (!isAuthorized) {
+    await respondWithUnauthorized(ctx, next)
+
+    return
+  }
+
+  const key = ctx.params['key']
+  if (!key) {
+    await respondWithBadRequest(ctx, next, 'Key path param is missing')
+  }
+
+  const result = await curriculumService.removeSkill(tokenPayload.userId, key)
+  await handleCurriculumResult(ctx, next, result)
+}
+
+async function handleCurriculumResult(ctx: KoaContext, next: Next, result: CurriculumResult) {
   if (result.error) {
     await respondWithInternalServerError(ctx, next, result.error)
 
