@@ -1,13 +1,22 @@
-<template>
-
-</template>
+<template></template>
 
 <script lang="ts">
+import { useCurriculumStore } from '@/stores/curriculum-store'
+import { mapState } from 'pinia'
+
 export default {
-  name: "EducationList"
-};
+  name: 'EducationList',
+  setup() {
+    return {
+      curriculumStore: useCurriculumStore()
+    }
+  },
+  computed: {
+    ...mapState(useCurriculumStore, {
+      curriculum: 'curriculum'
+    })
+  }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

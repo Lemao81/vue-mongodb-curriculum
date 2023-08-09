@@ -1,8 +1,8 @@
 <template>
   <div>
-    <CurriculumSection :title="'Skills'" :form-component="'SkillForm'" />
-    <CurriculumSection :title="'Jobs'" :form-component="'JobForm'" />
-    <CurriculumSection :title="'Education'" :form-component="'EducationForm'" />
+    <CurriculumSection :title="'Skills'" :list-component="'SkillList'" :form-component="'SkillForm'" />
+    <CurriculumSection :title="'Jobs'" :list-component="'JobList'" :form-component="'JobForm'" />
+    <CurriculumSection :title="'Education'" :list-component="'EducationList'" :form-component="'EducationForm'" />
   </div>
 </template>
 

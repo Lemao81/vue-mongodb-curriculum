@@ -3,6 +3,9 @@
     <h2>{{ title }}</h2>
     <div class="body-container">
       <div class="content-container">
+        <div class="list-container">
+          <component :is="listComponent"></component>
+        </div>
         <div class="form-container" v-if="isEdit">
           <component :is="formComponent" @skill="onSkill" @job="onJob" @education="onEducation" @cancel="onCancel"></component>
         </div>
@@ -19,16 +22,23 @@ import EducationForm from '@/components/EducationForm.vue'
 import { Skill } from '@/models/skill'
 import { Job } from '@/models/job'
 import { Education } from '@/models/education'
-import { useUserAuthStore } from '@/stores/user-auth-store'
+import SkillList from '@/components/SkillList.vue'
+import JobList from '@/components/JobList.vue'
+import EducationList from '@/components/EducationList.vue'
+import { useCurriculumStore } from '@/stores/curriculum-store'
 
 export default {
   setup() {
     return {
-      userAuthStore: useUserAuthStore()
+      curriculumStore: useCurriculumStore()
     }
   },
   props: {
     title: {
+      type: String,
+      required: true
+    },
+    listComponent: {
       type: String,
       required: true
     },
@@ -47,9 +57,11 @@ export default {
       this.isEdit = true
     },
     async onSkill(skill: Skill) {
-      const result = await this.$curriculumApi.addSkill(this.userAuthStore.userId, skill)
+      const result = await this.$curriculumApi.addSkill(skill)
       if (result.error) {
         this.$toast.warning(result.error)
+      } else {
+        this.curriculumStore.$patch({ curriculum: result.curriculum })
       }
       this.isEdit = false
     },
@@ -65,7 +77,7 @@ export default {
       this.isEdit = false
     }
   },
-  components: { SkillForm, JobForm, EducationForm }
+  components: { SkillList, SkillForm, JobList, JobForm, EducationList, EducationForm }
 }
 </script>
 
@@ -80,6 +92,9 @@ section {
 }
 .fa-plus {
   width: 1em;
+}
+.list-container {
+  padding: 0.5rem;
 }
 .form-container {
   padding: 0.5rem;

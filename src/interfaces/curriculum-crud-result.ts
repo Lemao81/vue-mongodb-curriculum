@@ -1,6 +1,6 @@
 import type { Curriculum } from '@/models/curriculum'
 
-export interface GetCurriculumResult {
+export interface CurriculumCrudResult {
   error?: string
   curriculum?: Curriculum
 }

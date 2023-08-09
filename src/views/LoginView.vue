@@ -66,7 +66,7 @@ export default {
         isAuthenticated: true
       })
 
-      const curriculumResult = await this.$curriculumApi.getCurriculum(payload.userId)
+      const curriculumResult = await this.$curriculumApi.getCurriculum()
       if (curriculumResult.curriculum) {
         this.curriculumStore.$patch({
           curriculum: curriculumResult.curriculum
