@@ -1,4 +1,5 @@
 export class Job {
+  id?: string | undefined
   startDate: Date | undefined
   endDate: Date | undefined
   isCurrent: boolean

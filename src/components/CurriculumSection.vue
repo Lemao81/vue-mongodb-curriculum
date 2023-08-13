@@ -10,7 +10,7 @@
           <component :is="formComponent" @skill="onSkill" @job="onJob" @education="onEducation" @cancel="onCancel"></component>
         </div>
       </div>
-      <fai icon="fa-plus" v-if="!isEdit" @click="onAdd"></fai>
+      <fai class="mt-1 ml-2" icon="fa-plus" v-if="!isEdit" @click="onAdd"></fai>
     </div>
   </section>
 </template>
@@ -88,7 +88,7 @@ section {
 .body-container {
   display: flex;
   flex-direction: column;
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 0;
 }
 .fa-plus {
   width: 1em;
