@@ -1,10 +1,12 @@
 import { model, Schema, ObjectId, Document } from 'mongoose'
 import { Skill, skillSchema } from './skill-schema'
 import { CURRICULUM_MODEL_NAME } from '../../consts/model-name-consts'
+import { Job, jobSchema } from './job-schema'
 
 export interface Curriculum {
   userId: ObjectId
   skills: Skill[]
+  jobs: Job[]
   createdDate?: Date
   modifiedDate?: Date
 }
@@ -18,6 +20,9 @@ export const curriculumSchema = new Schema({
   },
   skills: {
     type: [skillSchema]
+  },
+  jobs: {
+    type: [jobSchema]
   },
   createdDate: {
     type: Date,

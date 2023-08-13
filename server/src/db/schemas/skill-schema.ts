@@ -1,14 +1,15 @@
-import { model, Schema, Document } from 'mongoose'
-import { SKILL_MODEL_NAME } from "../../consts/model-name-consts";
+import { model, Schema, Document, Types } from 'mongoose'
+import { SKILL_MODEL_NAME } from '../../consts/model-name-consts'
 
 export interface Skill {
+  _id?: Types.ObjectId
   key: string
   label: string
   createdDate?: Date
   modifiedDate?: Date
 }
 
-export interface SkillDocument extends Skill, Document {}
+export interface SkillDocument extends Skill, Document<Types.ObjectId> {}
 
 export const skillSchema = new Schema({
   key: {
