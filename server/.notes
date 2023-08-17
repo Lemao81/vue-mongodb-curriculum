@@ -1,0 +1,1 @@
+docker run --rm --name mymongodb -p 27017:27017 -v C:\DockerVolumes\mongodb:/data/db -d mongo mongod --auth
