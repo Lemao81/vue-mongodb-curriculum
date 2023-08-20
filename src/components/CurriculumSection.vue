@@ -26,6 +26,7 @@ import SkillList from '@/components/SkillList.vue'
 import JobList from '@/components/JobList.vue'
 import EducationList from '@/components/EducationList.vue'
 import { useCurriculumStore } from '@/stores/curriculum-store'
+import type { CurriculumCrudResult } from '@/interfaces/curriculum-crud-result'
 
 export default {
   setup() {
@@ -58,22 +59,25 @@ export default {
     },
     async onSkill(skill: Skill) {
       const result = await this.$curriculumApi.addSkill(skill)
-      if (result.error) {
-        this.$toast.warning(result.error)
-      } else {
-        this.curriculumStore.$patch({ curriculum: result.curriculum })
-      }
-      this.isEdit = false
+      this._handleCurriculumCrudResult(result)
     },
-    onJob(job: Job) {
-      console.log(job)
-      this.isEdit = false
+    async onJob(job: Job) {
+      const result = await this.$curriculumApi.addJob(job)
+      this._handleCurriculumCrudResult(result)
     },
     onEducation(education: Education) {
       console.log(education)
       this.isEdit = false
     },
     onCancel() {
+      this.isEdit = false
+    },
+    _handleCurriculumCrudResult(result: CurriculumCrudResult) {
+      if (result.error) {
+        this.$toast.warning(result.error)
+      } else {
+        this.curriculumStore.$patch({ curriculum: result.curriculum })
+      }
       this.isEdit = false
     }
   },

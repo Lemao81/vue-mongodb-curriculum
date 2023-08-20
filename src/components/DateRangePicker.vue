@@ -15,15 +15,16 @@
 <script lang="ts">
 import VueDatePicker from '@vuepic/vue-datepicker'
 import type { MonthYear } from '@/interfaces/month-year'
+import type { PropType } from 'vue'
 
 export default {
   name: 'DateRangePicker',
   props: {
     startDate: {
-      type: Date
+      type: Object as PropType<MonthYear>
     },
     endDate: {
-      type: Date
+      type: Object as PropType<MonthYear>
     },
     isCurrent: {
       type: Boolean

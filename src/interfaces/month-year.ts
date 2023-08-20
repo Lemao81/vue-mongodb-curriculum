@@ -1,4 +1,4 @@
 export interface MonthYear {
-  month?: number
-  year?: number
+  month: number | string
+  year: number | string
 }
