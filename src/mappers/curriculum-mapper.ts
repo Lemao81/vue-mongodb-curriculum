@@ -4,6 +4,7 @@ import type { SkillDto } from '@/interfaces/dtos/skill-dto'
 import type { Skill } from '@/models/skill'
 import type { JobDto } from '@/interfaces/dtos/job-dto'
 import type { Job } from '@/models/job'
+import type { MonthYear } from '@/interfaces/month-year'
 
 export function mapToCurriculum(dto: CurriculumDto): Curriculum {
   return {
@@ -20,10 +21,25 @@ function mapToSkill(dto: SkillDto): Skill {
 }
 
 function mapToJob(dto: JobDto): Job {
+  const startDateParsed = dto.startDate ? new Date(dto.startDate) : undefined
+  const startDate: MonthYear | undefined = startDateParsed
+    ? {
+        month: startDateParsed.getMonth(),
+        year: startDateParsed.getFullYear()
+      }
+    : undefined
+  const endDateParsed = dto.endDate ? new Date(dto.endDate) : undefined
+  const endDate: MonthYear | undefined = endDateParsed
+    ? {
+        month: endDateParsed.getMonth(),
+        year: endDateParsed.getFullYear()
+      }
+    : undefined
+
   return {
-    id: dto.id || '',
-    startDate: dto.startDate,
-    endDate: dto.endDate,
+    id: dto._id || '',
+    startDate,
+    endDate,
     isCurrent: dto.isCurrent || false,
     jobTitle: dto.jobTitle || '',
     company: dto.company || '',

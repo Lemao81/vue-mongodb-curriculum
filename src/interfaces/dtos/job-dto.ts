@@ -1,7 +1,7 @@
 export interface JobDto {
-  id?: string
-  startDate?: Date
-  endDate?: Date
+  _id?: string
+  startDate?: string
+  endDate?: string
   isCurrent?: boolean
   company?: string
   jobTitle?: string

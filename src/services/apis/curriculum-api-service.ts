@@ -8,6 +8,7 @@ import type { CurriculumDto } from '@/interfaces/dtos/curriculum-dto'
 import { mapToCurriculum } from '@/mappers/curriculum-mapper'
 import type { Job } from '@/models/job'
 import type { AddJobRequest } from '@/interfaces/dtos/add-job-request'
+import { createDate } from '@/helpers/helper'
 
 export class CurriculumApiService {
   async getCurriculum(): Promise<CurriculumCrudResult> {
@@ -16,7 +17,7 @@ export class CurriculumApiService {
 
       return { curriculum: mapToCurriculum(response.data) }
     } catch (error: any) {
-      return { error: error.message || 'Error during API call' }
+      return this.handleApiError(error)
     }
   }
 
@@ -30,7 +31,7 @@ export class CurriculumApiService {
 
       return { curriculum: mapToCurriculum(response.data) }
     } catch (error: any) {
-      return { error: error.message || 'Error during API call' }
+      return this.handleApiError(error)
     }
   }
 
@@ -40,14 +41,18 @@ export class CurriculumApiService {
 
       return { curriculum: mapToCurriculum(response.data) }
     } catch (error: any) {
-      return { error: error.message || 'Error during API call' }
+      return this.handleApiError(error)
     }
   }
 
   async addJob(job: Job): Promise<CurriculumCrudResult> {
+    if (!job.startDate) {
+      throw new Error('Start date required when adding job')
+    }
+
     const request: AddJobRequest = {
-      startDate: new Date(job.startDate?.year as number, job.startDate?.month as number),
-      endDate: job.endDate ? new Date(job.endDate?.year as number, job.endDate?.month as number) : undefined,
+      startDate: createDate(job.startDate),
+      endDate: job.endDate ? createDate(job.endDate) : undefined,
       jobTitle: job.jobTitle,
       company: job.company,
       isCurrent: job.isCurrent,
@@ -59,8 +64,25 @@ export class CurriculumApiService {
 
       return { curriculum: mapToCurriculum(response.data) }
     } catch (error: any) {
-      return { error: error.message || 'Error during API call' }
+      return this.handleApiError(error)
     }
+  }
+
+  async removeJob(id: string): Promise<CurriculumCrudResult> {
+    try {
+      const response = await axios.delete<CurriculumDto, AxiosResponse<CurriculumDto>>(`${CURRICULUM_API_BASE_URL}/jobs/${id}`)
+
+      return { curriculum: mapToCurriculum(response.data) }
+    } catch (error: any) {
+      return this.handleApiError(error)
+    }
+  }
+
+  private handleApiError(error: any): CurriculumCrudResult {
+    const message = error?.message || 'Error during API call'
+    console.error(message)
+
+    return { error: message }
   }
 }
 
