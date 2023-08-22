@@ -13,6 +13,7 @@ import moment from 'moment'
 import { DATE_FORMAT } from '@/consts/consts'
 import { createDate } from '@/helpers/helper'
 import { useCurriculumStore } from '@/stores/curriculum-store'
+import { EVENT_REMOVE } from '@/consts/event-consts'
 
 export default {
   name: 'JobItem',
@@ -43,13 +44,11 @@ export default {
     },
     async onRemove(id: string | undefined) {
       if (id) {
-        const result = await this.$curriculumApi.removeJob(id)
-        this.curriculumStore.$patch({
-          curriculum: result.curriculum
-        })
+        this.$emit(EVENT_REMOVE, id)
       }
     }
-  }
+  },
+  emits: [EVENT_REMOVE]
 }
 </script>
 
