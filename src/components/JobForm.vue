@@ -25,14 +25,21 @@ import type { JobFormComponentData } from '@/interfaces/job-form-component-data'
 
 export default {
   name: 'JobForm',
+  props: {
+    job: {
+      type: Job,
+      required: false
+    }
+  },
   data(): JobFormComponentData {
     return {
-      startDate: undefined,
-      endDate: undefined,
-      isCurrent: false,
-      company: '',
-      jobTitle: '',
-      description: '',
+      id: this.job?.id,
+      startDate: this.job?.startDate,
+      endDate: this.job?.endDate,
+      isCurrent: this.job?.isCurrent || false,
+      company: this.job?.company || '',
+      jobTitle: this.job?.jobTitle || '',
+      description: this.job?.description || '',
       rules: {
         required: fieldRequired
       }
@@ -52,7 +59,7 @@ export default {
         return
       }
 
-      const job = new Job(this.startDate, this.endDate, this.isCurrent, this.company, this.jobTitle, this.description)
+      const job = new Job(this.id, this.startDate, this.endDate, this.isCurrent, this.company, this.jobTitle, this.description)
       this.$emit(EVENT_JOB, job)
     },
     onCancel() {

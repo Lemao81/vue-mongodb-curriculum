@@ -1,1 +1,1 @@
-export const DATE_FORMAT = 'DD/MM/yyyy'
+export const MONTH_YEAR_FORMAT = 'MM/yyyy'

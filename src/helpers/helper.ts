@@ -14,3 +14,7 @@ export function extractJwtPayload<T>(tokenString: string): T | null {
 export function createDate(monthYear: MonthYear): Date {
   return new Date(Number(monthYear.year), Number(monthYear.month))
 }
+
+export function stringifyError(error: any): string {
+  return JSON.stringify(error, Object.getOwnPropertyNames(error))
+}

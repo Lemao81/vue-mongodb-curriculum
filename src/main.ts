@@ -25,6 +25,7 @@ import { curriculumApiService } from '@/services/apis/curriculum-api-service'
 import axios from 'axios'
 import { API_BASE_URL } from '@/consts/base-url-consts'
 import appendRequestAuthorization from '@/interceptors/request-authorization-interceptor'
+import { stringifyError } from '@/helpers/helper'
 
 library.add(fas)
 
@@ -34,7 +35,7 @@ axios.interceptors.request.use(appendRequestAuthorization, null, { runWhen: (req
 const vuetify = createVuetify({ components, directives })
 
 const app = createApp(App).component('fai', FontAwesomeIcon).component('VueDatePicker', VueDatePicker)
-app.config.errorHandler = (error) => console.error(`Global: ${JSON.stringify(error)}`)
+app.config.errorHandler = (error) => console.error(`ErrorHandler: ${stringifyError(error)}`)
 
 app.use(createPinia())
 app.use(router)

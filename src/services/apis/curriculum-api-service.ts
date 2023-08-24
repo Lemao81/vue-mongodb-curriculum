@@ -7,7 +7,7 @@ import type { CurriculumCrudResult } from '@/interfaces/curriculum-crud-result'
 import type { CurriculumDto } from '@/interfaces/dtos/curriculum-dto'
 import { mapToCurriculum } from '@/mappers/curriculum-mapper'
 import type { Job } from '@/models/job'
-import type { AddJobRequest } from '@/interfaces/dtos/add-job-request'
+import type { UpsertJobRequest } from '@/interfaces/dtos/upsert-job-request'
 import { createDate } from '@/helpers/helper'
 
 export class CurriculumApiService {
@@ -50,7 +50,7 @@ export class CurriculumApiService {
       throw new Error('Start date required when adding job')
     }
 
-    const request: AddJobRequest = {
+    const request: UpsertJobRequest = {
       startDate: createDate(job.startDate),
       endDate: job.endDate ? createDate(job.endDate) : undefined,
       jobTitle: job.jobTitle,
@@ -61,6 +61,33 @@ export class CurriculumApiService {
 
     try {
       const response = await axios.post<CurriculumDto, AxiosResponse<CurriculumDto>>(`${CURRICULUM_API_BASE_URL}/jobs`, request)
+
+      return { curriculum: mapToCurriculum(response.data) }
+    } catch (error: any) {
+      return this.handleApiError(error)
+    }
+  }
+
+  async updateJob(job: Job): Promise<CurriculumCrudResult> {
+    if (!job.id) {
+      throw new Error('Id required when updating job')
+    }
+
+    if (!job.startDate) {
+      throw new Error('Start date required when updating job')
+    }
+
+    const request: UpsertJobRequest = {
+      startDate: createDate(job.startDate),
+      endDate: job.endDate ? createDate(job.endDate) : undefined,
+      jobTitle: job.jobTitle,
+      company: job.company,
+      isCurrent: job.isCurrent,
+      description: job.description
+    }
+
+    try {
+      const response = await axios.put<CurriculumDto, AxiosResponse<CurriculumDto>>(`${CURRICULUM_API_BASE_URL}/jobs/${job.id}`, request)
 
       return { curriculum: mapToCurriculum(response.data) }
     } catch (error: any) {
