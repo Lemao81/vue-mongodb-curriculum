@@ -4,6 +4,7 @@ import { Types } from 'mongoose'
 import { CreateResult } from '../types'
 import { CurriculumResult } from '../interfaces/curriculum-result'
 import { UpsertJobRequest } from '../interfaces/dtos/upsert-job-request'
+import { sortJobs } from '../helpers'
 
 class CurriculumService {
   async createCurriculum(userId: Types.ObjectId): Promise<CreateResult> {
@@ -86,6 +87,7 @@ class CurriculumService {
         isCurrent: request.isCurrent,
         description: request.description
       })
+      sortJobs(curriculum)
       curriculum = await curriculum.save()
 
       return { curriculum }
@@ -111,6 +113,7 @@ class CurriculumService {
         job.description = request.description
         job.isCurrent = request.isCurrent
 
+        sortJobs(curriculum)
         curriculum = await curriculum.save()
       }
 
