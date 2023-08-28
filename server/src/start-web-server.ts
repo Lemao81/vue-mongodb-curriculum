@@ -8,6 +8,7 @@ import registerUserEndpoints from './apis/user-api'
 import registerAuthEndpoints from './apis/auth-api'
 import registerSkillEndpoints from './apis/skill-api'
 import registerCurriculumEndpoints from './apis/curriculum-api'
+import { validateAuthToken } from './middlewares/auth-token-validation-middleware'
 
 export default async function startWebServer() {
   const app = new Koa()
@@ -27,6 +28,7 @@ export default async function startWebServer() {
   app.use(cors())
   app.use(json())
   app.use(bodyParser())
+  app.use(validateAuthToken())
   app.use(router.routes()).use(router.allowedMethods())
 
   app.listen(3000, () => console.log('Koa server listening on port 3000..'))

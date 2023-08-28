@@ -5,6 +5,7 @@ import { createHash } from 'crypto'
 import { AuthorizationResult } from './interfaces/authorization-result'
 import authService from './services/auth-service'
 import { CurriculumDocument } from './db/schemas/curriculum-schema'
+import { IdentityUser } from './interfaces/identity-user'
 
 export function parseBody<T>(ctx: KoaContext): T | null {
   const body = (<any>ctx.request).body
@@ -66,6 +67,10 @@ export function createSha256Hash(input: string) {
 
 export function sortJobs(curriculum: CurriculumDocument) {
   curriculum.jobs.sort((a, b) => b.startDate.getTime() - a.startDate.getTime())
+}
+
+export function getIdentityUser(ctx: KoaContext): IdentityUser {
+  return ctx.app.context.identityUser as IdentityUser
 }
 
 function extractAuthorizationToken(ctx: KoaContext): string | null {

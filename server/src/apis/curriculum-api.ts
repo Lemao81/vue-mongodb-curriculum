@@ -2,7 +2,7 @@ import * as Router from 'koa-router'
 import { CURRICULUM_API_BASE_PATH } from '../consts/base-path-consts'
 import { KoaContext } from '../types'
 import { Next } from 'koa'
-import { parseBody, respondWithBadRequest, respondWithInternalServerError, respondWithNotFound, respondWithUnauthorized, verifyAuthorization } from '../helpers'
+import { getIdentityUser, parseBody, respondWithBadRequest, respondWithInternalServerError, respondWithNotFound } from '../helpers'
 import { AddSkillRequest } from '../interfaces/dtos/add-skill-request'
 import curriculumService from '../services/curriculum-service'
 import { HttpStatusCode } from 'axios'
@@ -19,25 +19,12 @@ export default function registerCurriculumEndpoints(router: Router) {
 }
 
 async function getCurriculum(ctx: KoaContext, next: Next) {
-  const { isAuthorized, tokenPayload } = verifyAuthorization(ctx)
-  if (!isAuthorized) {
-    await respondWithUnauthorized(ctx, next)
-
-    return
-  }
-
-  const result = await curriculumService.getCurriculum(tokenPayload.userId)
+  const identityUser = getIdentityUser(ctx)
+  const result = await curriculumService.getCurriculum(identityUser.id)
   await handleCurriculumResult(ctx, next, result)
 }
 
 async function addSkill(ctx: KoaContext, next: Next) {
-  const { isAuthorized, tokenPayload } = verifyAuthorization(ctx)
-  if (!isAuthorized) {
-    await respondWithUnauthorized(ctx, next)
-
-    return
-  }
-
   const request = parseBody<AddSkillRequest>(ctx)
   if (!request?.key) {
     await respondWithBadRequest(ctx, next, 'Request body NOK')
@@ -45,35 +32,23 @@ async function addSkill(ctx: KoaContext, next: Next) {
     return
   }
 
-  const result = await curriculumService.addSkill(tokenPayload.userId, request.key)
+  const identityUser = getIdentityUser(ctx)
+  const result = await curriculumService.addSkill(identityUser.id, request.key)
   await handleCurriculumResult(ctx, next, result)
 }
 
 async function removeSkill(ctx: KoaContext, next: Next) {
-  const { isAuthorized, tokenPayload } = verifyAuthorization(ctx)
-  if (!isAuthorized) {
-    await respondWithUnauthorized(ctx, next)
-
-    return
-  }
-
   const key = ctx.params['key']
   if (!key) {
     await respondWithBadRequest(ctx, next, 'Key path param is missing')
   }
 
-  const result = await curriculumService.removeSkill(tokenPayload.userId, key)
+  const identityUser = getIdentityUser(ctx)
+  const result = await curriculumService.removeSkill(identityUser.id, key)
   await handleCurriculumResult(ctx, next, result)
 }
 
 async function addJob(ctx: KoaContext, next: Next) {
-  const { isAuthorized, tokenPayload } = verifyAuthorization(ctx)
-  if (!isAuthorized) {
-    await respondWithUnauthorized(ctx, next)
-
-    return
-  }
-
   const request = parseBody<UpsertJobRequest>(ctx)
   const error = validateUpsertJobRequest(request)
   if (error) {
@@ -82,18 +57,12 @@ async function addJob(ctx: KoaContext, next: Next) {
     return
   }
 
-  const result = await curriculumService.addJob(tokenPayload.userId, request)
+  const identityUser = getIdentityUser(ctx)
+  const result = await curriculumService.addJob(identityUser.id, request)
   await handleCurriculumResult(ctx, next, result)
 }
 
 async function updateJob(ctx: KoaContext, next: Next) {
-  const { isAuthorized, tokenPayload } = verifyAuthorization(ctx)
-  if (!isAuthorized) {
-    await respondWithUnauthorized(ctx, next)
-
-    return
-  }
-
   const jobId = ctx.params['id']
   if (!jobId) {
     await respondWithBadRequest(ctx, next, 'Id path param is missing')
@@ -109,18 +78,12 @@ async function updateJob(ctx: KoaContext, next: Next) {
     return
   }
 
-  const result = await curriculumService.updateJob(tokenPayload.userId, jobId, request)
+  const identityUser = getIdentityUser(ctx)
+  const result = await curriculumService.updateJob(identityUser.id, jobId, request)
   await handleCurriculumResult(ctx, next, result)
 }
 
 async function removeJob(ctx: KoaContext, next: Next) {
-  const { isAuthorized, tokenPayload } = verifyAuthorization(ctx)
-  if (!isAuthorized) {
-    await respondWithUnauthorized(ctx, next)
-
-    return
-  }
-
   const jobId = ctx.params['id']
   if (!jobId) {
     await respondWithBadRequest(ctx, next, 'Id path param is missing')
@@ -128,7 +91,8 @@ async function removeJob(ctx: KoaContext, next: Next) {
     return
   }
 
-  const result = await curriculumService.removeJob(tokenPayload.userId, jobId)
+  const identityUser = getIdentityUser(ctx)
+  const result = await curriculumService.removeJob(identityUser.id, jobId)
   await handleCurriculumResult(ctx, next, result)
 }
 
