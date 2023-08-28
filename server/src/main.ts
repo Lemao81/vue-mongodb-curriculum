@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv'
-import startWebServer from './web/start-web-server'
+import startWebServer from './start-web-server'
 import connectDb from './db/connect-db'
 import seedDb from './db/seed-db'
 

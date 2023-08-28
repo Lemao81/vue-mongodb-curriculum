@@ -1,5 +1,5 @@
-import { CurriculumModel, CurriculumDocument } from '../../db/schemas/curriculum-schema'
-import { SkillModel, SkillDocument } from '../../db/schemas/skill-schema'
+import { CurriculumModel, CurriculumDocument } from '../db/schemas/curriculum-schema'
+import { SkillModel, SkillDocument } from '../db/schemas/skill-schema'
 import { Types } from 'mongoose'
 import { CreateResult } from '../types'
 import { CurriculumResult } from '../interfaces/curriculum-result'

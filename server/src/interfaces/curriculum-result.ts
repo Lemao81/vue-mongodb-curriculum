@@ -1,4 +1,4 @@
-import { CurriculumDocument } from '../../db/schemas/curriculum-schema'
+import { CurriculumDocument } from '../db/schemas/curriculum-schema'
 
 export interface CurriculumResult {
   error?: string

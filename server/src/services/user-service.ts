@@ -1,4 +1,4 @@
-import { UserModel } from '../../db/schemas/user-schema'
+import { UserModel } from '../db/schemas/user-schema'
 import { CreateResult } from '../types'
 import { createSha256Hash } from '../helpers'
 

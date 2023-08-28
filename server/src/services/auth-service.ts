@@ -1,8 +1,8 @@
-import { UserModel, UserDocument } from '../../db/schemas/user-schema'
+import { UserModel, UserDocument } from '../db/schemas/user-schema'
 import { LoginResult } from '../interfaces/login-result'
 import { createSha256Hash } from '../helpers'
 import * as jwt from 'jsonwebtoken'
-import { ENV_JWT_SECRET } from '../../consts/env-variable-consts'
+import { ENV_JWT_SECRET } from '../consts/env-variable-consts'
 import { AuthTokenPayload } from '../interfaces/auth-token-payload'
 
 class AuthService {

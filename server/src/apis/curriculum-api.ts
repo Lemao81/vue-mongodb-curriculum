@@ -1,5 +1,5 @@
 import * as Router from 'koa-router'
-import { CURRICULUM_API_BASE_PATH } from '../../consts/base-path-consts'
+import { CURRICULUM_API_BASE_PATH } from '../consts/base-path-consts'
 import { KoaContext } from '../types'
 import { Next } from 'koa'
 import { parseBody, respondWithBadRequest, respondWithInternalServerError, respondWithNotFound, respondWithUnauthorized, verifyAuthorization } from '../helpers'

@@ -5,7 +5,7 @@ import userService from '../services/user-service'
 import { CreateUserRequest } from '../interfaces/dtos/create-user-request'
 import { HttpStatusCode } from 'axios'
 import { parseBody, respondWithBadRequest, respondWithInternalServerError } from '../helpers'
-import { USER_API_BASE_PATH } from '../../consts/base-path-consts'
+import { USER_API_BASE_PATH } from '../consts/base-path-consts'
 import curriculumService from '../services/curriculum-service'
 
 export default function registerUserEndpoints(router: Router) {

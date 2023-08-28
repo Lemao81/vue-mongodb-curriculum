@@ -4,7 +4,7 @@ import { Next } from 'koa'
 import { createHash } from 'crypto'
 import { AuthorizationResult } from './interfaces/authorization-result'
 import authService from './services/auth-service'
-import { CurriculumDocument } from '../db/schemas/curriculum-schema'
+import { CurriculumDocument } from './db/schemas/curriculum-schema'
 
 export function parseBody<T>(ctx: KoaContext): T | null {
   const body = (<any>ctx.request).body

@@ -4,7 +4,7 @@ import { Next } from 'koa'
 import skillService from '../services/skill-service'
 import { respondWithInternalServerError, respondWithUnauthorized, verifyAuthorization } from '../helpers'
 import { HttpStatusCode } from 'axios'
-import { SKILL_API_BASE_PATH } from '../../consts/base-path-consts'
+import { SKILL_API_BASE_PATH } from '../consts/base-path-consts'
 
 export default function registerSkillEndpoints(router: Router) {
   router.get(SKILL_API_BASE_PATH, getSkills)
