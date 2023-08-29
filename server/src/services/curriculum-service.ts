@@ -4,7 +4,8 @@ import { Types } from 'mongoose'
 import { CreateResult } from '../types'
 import { CurriculumResult } from '../interfaces/curriculum-result'
 import { UpsertJobRequest } from '../interfaces/dtos/upsert-job-request'
-import { sortJobs } from '../helpers'
+import { sortEducations, sortJobs } from '../helpers'
+import { UpsertEducationRequest } from '../interfaces/dtos/upsert-education-request'
 
 class CurriculumService {
   async createCurriculum(userId: Types.ObjectId): Promise<CreateResult> {
@@ -82,9 +83,9 @@ class CurriculumService {
       curriculum.jobs.push({
         startDate: request.startDate,
         endDate: request.endDate,
+        isCurrent: request.isCurrent,
         company: request.company,
         jobTitle: request.jobTitle,
-        isCurrent: request.isCurrent,
         description: request.description
       })
       sortJobs(curriculum)
@@ -137,6 +138,75 @@ class CurriculumService {
       return { curriculum }
     } catch (error) {
       return { error: error?.message || 'Error during job removal' }
+    }
+  }
+
+  async addEducation(userIdString: string, request: UpsertEducationRequest): Promise<CurriculumResult> {
+    try {
+      const curriculumResult = await this.getCurriculum(userIdString)
+      if (!curriculumResult.curriculum) {
+        return curriculumResult
+      }
+
+      let curriculum = curriculumResult.curriculum
+      curriculum.educations.push({
+        startDate: request.startDate,
+        endDate: request.endDate,
+        isCurrent: request.isCurrent,
+        institute: request.institute,
+        degree: request.degree,
+        grade: request.grade
+      })
+      sortEducations(curriculum)
+      curriculum = await curriculum.save()
+
+      return { curriculum }
+    } catch (error) {
+      return { error: error?.message || 'Error during education addition' }
+    }
+  }
+
+  async updateEducation(userIdString: string, educationIdString: string, request: UpsertEducationRequest): Promise<CurriculumResult> {
+    try {
+      const curriculumResult = await this.getCurriculum(userIdString)
+      if (!curriculumResult.curriculum) {
+        return curriculumResult
+      }
+
+      let curriculum = curriculumResult.curriculum
+      const education = curriculum.educations.find((e) => e._id.toString() === educationIdString)
+      if (education) {
+        education.startDate = request.startDate
+        education.endDate = request.endDate
+        education.isCurrent = request.isCurrent
+        education.institute = request.institute
+        education.degree = request.degree
+        education.grade = request.grade
+
+        sortEducations(curriculum)
+        curriculum = await curriculum.save()
+      }
+
+      return { curriculum }
+    } catch (error) {
+      return { error: error?.message || 'Error during education update' }
+    }
+  }
+
+  async removeEducation(userIdString: string, educationIdString: string): Promise<CurriculumResult> {
+    try {
+      const curriculumResult = await this.getCurriculum(userIdString)
+      if (!curriculumResult.curriculum) {
+        return curriculumResult
+      }
+
+      let curriculum = curriculumResult.curriculum
+      curriculum.educations = curriculum.educations.filter((e) => e._id.toString() !== educationIdString)
+      curriculum = await curriculum.save()
+
+      return { curriculum }
+    } catch (error) {
+      return { error: error?.message || 'Error during education removal' }
     }
   }
 }

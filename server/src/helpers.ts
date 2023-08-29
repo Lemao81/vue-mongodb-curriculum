@@ -69,6 +69,10 @@ export function sortJobs(curriculum: CurriculumDocument) {
   curriculum.jobs.sort((a, b) => b.startDate.getTime() - a.startDate.getTime())
 }
 
+export function sortEducations(curriculum: CurriculumDocument) {
+  curriculum.educations.sort((a, b) => b.startDate.getTime() - a.startDate.getTime())
+}
+
 export function getIdentityUser(ctx: KoaContext): IdentityUser {
   return ctx.app.context.identityUser as IdentityUser
 }
