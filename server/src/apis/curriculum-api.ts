@@ -8,6 +8,7 @@ import curriculumService from '../services/curriculum-service'
 import { HttpStatusCode } from 'axios'
 import { CurriculumResult } from '../interfaces/curriculum-result'
 import { UpsertJobRequest } from '../interfaces/dtos/upsert-job-request'
+import { UpsertEducationRequest } from '../interfaces/dtos/upsert-education-request'
 
 export default function registerCurriculumEndpoints(router: Router) {
   router.get(`${CURRICULUM_API_BASE_PATH}`, getCurriculum)
@@ -16,6 +17,9 @@ export default function registerCurriculumEndpoints(router: Router) {
   router.post(`${CURRICULUM_API_BASE_PATH}/jobs`, addJob)
   router.put(`${CURRICULUM_API_BASE_PATH}/jobs/:id`, updateJob)
   router.delete(`${CURRICULUM_API_BASE_PATH}/jobs/:id`, removeJob)
+  router.post(`${CURRICULUM_API_BASE_PATH}/educations`, addEducation)
+  router.put(`${CURRICULUM_API_BASE_PATH}/educations/:id`, updateEducation)
+  router.delete(`${CURRICULUM_API_BASE_PATH}/educations/:id`, removeEducation)
 }
 
 async function getCurriculum(ctx: KoaContext, next: Next) {
@@ -27,7 +31,7 @@ async function getCurriculum(ctx: KoaContext, next: Next) {
 async function addSkill(ctx: KoaContext, next: Next) {
   const request = parseBody<AddSkillRequest>(ctx)
   if (!request?.key) {
-    await respondWithBadRequest(ctx, next, 'Request body NOK')
+    await respondWithBadRequest(ctx, next, 'No key provided')
 
     return
   }
@@ -41,6 +45,8 @@ async function removeSkill(ctx: KoaContext, next: Next) {
   const key = ctx.params['key']
   if (!key) {
     await respondWithBadRequest(ctx, next, 'Key path param is missing')
+
+    return
   }
 
   const identityUser = getIdentityUser(ctx)
@@ -96,6 +102,54 @@ async function removeJob(ctx: KoaContext, next: Next) {
   await handleCurriculumResult(ctx, next, result)
 }
 
+async function addEducation(ctx: KoaContext, next: Next) {
+  const request = parseBody<UpsertEducationRequest>(ctx)
+  const error = validateUpsertEducationRequest(request)
+  if (error) {
+    await respondWithBadRequest(ctx, next, error)
+
+    return
+  }
+
+  const identityUser = getIdentityUser(ctx)
+  const result = await curriculumService.addEducation(identityUser.id, request)
+  await handleCurriculumResult(ctx, next, result)
+}
+
+async function updateEducation(ctx: KoaContext, next: Next) {
+  const educationId = ctx.params['id']
+  if (!educationId) {
+    await respondWithBadRequest(ctx, next, 'Id path param is missing')
+
+    return
+  }
+
+  const request = parseBody<UpsertEducationRequest>(ctx)
+  const error = validateUpsertEducationRequest(request)
+  if (error) {
+    await respondWithBadRequest(ctx, next, error)
+
+    return
+  }
+
+  const identityUser = getIdentityUser(ctx)
+  const result = await curriculumService.updateEducation(identityUser.id, educationId, request)
+  await handleCurriculumResult(ctx, next, result)
+}
+
+async function removeEducation(ctx: KoaContext, next: Next) {
+  const educationId = ctx.params['id']
+  if (!educationId) {
+    await respondWithBadRequest(ctx, next, 'Id path param is missing')
+
+    return
+  }
+
+  const identityUser = getIdentityUser(ctx)
+  const result = await curriculumService.removeEducation(identityUser.id, educationId)
+  await handleCurriculumResult(ctx, next, result)
+}
+
 async function handleCurriculumResult(ctx: KoaContext, next: Next, result: CurriculumResult) {
   if (result.error) {
     await respondWithInternalServerError(ctx, next, result.error)
@@ -122,5 +176,15 @@ function validateUpsertJobRequest(request: UpsertJobRequest): string {
 
   if (request.isCurrent && request.endDate) {
     return 'End date given for current job'
+  }
+}
+
+function validateUpsertEducationRequest(request: UpsertEducationRequest): string {
+  if (!request || !request.institute || !request.degree || !request.startDate || (!request.isCurrent && !request.endDate)) {
+    return 'Missing required fields'
+  }
+
+  if (request.isCurrent && request.endDate) {
+    return 'End date given for current education'
   }
 }
