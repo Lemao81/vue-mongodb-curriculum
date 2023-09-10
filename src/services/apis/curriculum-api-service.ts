@@ -9,6 +9,8 @@ import { mapToCurriculum } from '@/mappers/curriculum-mapper'
 import type { Job } from '@/models/job'
 import type { UpsertJobRequest } from '@/interfaces/dtos/upsert-job-request'
 import { createDate } from '@/helpers/helper'
+import type { Education } from '@/models/education'
+import type { UpsertEducationRequest } from '@/interfaces/dtos/upsert-education-request'
 
 export class CurriculumApiService {
   async getCurriculum(): Promise<CurriculumCrudResult> {
@@ -98,6 +100,66 @@ export class CurriculumApiService {
   async removeJob(id: string): Promise<CurriculumCrudResult> {
     try {
       const response = await axios.delete<CurriculumDto, AxiosResponse<CurriculumDto>>(`${CURRICULUM_API_BASE_URL}/jobs/${id}`)
+
+      return { curriculum: mapToCurriculum(response.data) }
+    } catch (error: any) {
+      return this.handleApiError(error)
+    }
+  }
+
+  async addEducation(education: Education): Promise<CurriculumCrudResult> {
+    if (!education.startDate) {
+      throw new Error('Start date required when adding education')
+    }
+
+    const request: UpsertEducationRequest = {
+      startDate: createDate(education.startDate),
+      endDate: education.endDate ? createDate(education.endDate) : undefined,
+      isCurrent: education.isCurrent,
+      institute: education.institute,
+      degree: education.degree,
+      grade: education.grade
+    }
+
+    try {
+      const response = await axios.post<CurriculumDto, AxiosResponse<CurriculumDto>>(`${CURRICULUM_API_BASE_URL}/educations`, request)
+
+      return { curriculum: mapToCurriculum(response.data) }
+    } catch (error: any) {
+      return this.handleApiError(error)
+    }
+  }
+
+  async updateEducation(education: Education): Promise<CurriculumCrudResult> {
+    if (!education.id) {
+      throw new Error('Id required when updating education')
+    }
+
+    if (!education.startDate) {
+      throw new Error('Start date required when adding education')
+    }
+
+    const request: UpsertEducationRequest = {
+      startDate: createDate(education.startDate),
+      endDate: education.endDate ? createDate(education.endDate) : undefined,
+      isCurrent: education.isCurrent,
+      institute: education.institute,
+      degree: education.degree,
+      grade: education.grade
+    }
+
+    try {
+      const response = await axios.put<CurriculumDto, AxiosResponse<CurriculumDto>>(`${CURRICULUM_API_BASE_URL}/educations/${education.id}`, request)
+
+      return { curriculum: mapToCurriculum(response.data) }
+    } catch (error: any) {
+      return this.handleApiError(error)
+    }
+  }
+
+  async removeEducation(id: string): Promise<CurriculumCrudResult> {
+    try {
+      const response = await axios.delete<CurriculumDto, AxiosResponse<CurriculumDto>>(`${CURRICULUM_API_BASE_URL}/educations/${id}`)
 
       return { curriculum: mapToCurriculum(response.data) }
     } catch (error: any) {

@@ -1,12 +1,24 @@
+import type { MonthYear } from '@/interfaces/month-year'
+
 export class Education {
-  startDate: Date | undefined
-  endDate: Date | undefined
+  id?: string | undefined
+  startDate: MonthYear | undefined
+  endDate: MonthYear | undefined
   isCurrent: boolean
   institute: string
   degree: string
-  grade: number
+  grade: number | undefined
 
-  constructor(startDate: Date | undefined, endDate: Date | undefined, isCurrent: boolean, institute: string, degree: string, grade: number) {
+  constructor(
+    id: string | undefined,
+    startDate: MonthYear | undefined,
+    endDate: MonthYear | undefined,
+    isCurrent: boolean,
+    institute: string,
+    degree: string,
+    grade: number | undefined
+  ) {
+    this.id = id
     this.startDate = startDate
     this.endDate = endDate
     this.isCurrent = isCurrent
