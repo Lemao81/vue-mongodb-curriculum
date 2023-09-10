@@ -6,7 +6,7 @@
         <v-col cols="12">
           <v-text-field ref="institute" label="Institute" density="compact" v-model.trim="institute" :rules="[rules.required]" required></v-text-field>
           <v-text-field ref="degree" label="Degree" density="compact" v-model.trim="degree" :rules="[rules.required]" required></v-text-field>
-          <v-text-field ref="grade" label="Grade" density="compact" type="number" v-model.trim="grade" :rules="[rules.required]" required></v-text-field>
+          <v-text-field ref="grade" label="Grade" density="compact" type="number" v-model.trim="grade"></v-text-field>
         </v-col>
       </v-row>
     </v-container>
@@ -21,17 +21,25 @@ import { fieldRequired } from '@/functions/validations'
 import { Education } from '@/models/education'
 import type { VTextField } from 'vuetify/components'
 import type { EducationFormComponentData } from '@/interfaces/education-form-component-data'
+import { isNumber } from '@/helpers/helper'
 
 export default {
   name: 'EducationForm',
+  props: {
+    education: {
+      type: Education,
+      required: false
+    }
+  },
   data(): EducationFormComponentData {
     return {
-      startDate: undefined,
-      endDate: undefined,
-      isCurrent: false,
-      institute: '',
-      degree: '',
-      grade: '',
+      id: this.education?.id,
+      startDate: this.education?.startDate,
+      endDate: this.education?.endDate,
+      isCurrent: this.education?.isCurrent || false,
+      institute: this.education?.institute || '',
+      degree: this.education?.degree || '',
+      grade: this.education?.grade?.toString() || '',
       rules: {
         required: fieldRequired
       }
@@ -44,14 +52,22 @@ export default {
         (this.isCurrent || !!this.endDate) &&
         (this.$refs.institute as VTextField).checkValidity() &&
         (this.$refs.degree as VTextField).checkValidity() &&
-        (this.$refs.grade as VTextField).checkValidity()
+        (!this.grade || isNumber(this.grade))
       if (!isValid) {
         this.$toast.warning('Input NOK')
 
         return
       }
 
-      const education = new Education(this.startDate, this.endDate, this.isCurrent, this.institute, this.degree, parseInt(this.grade || '0'))
+      const education = new Education(
+        this.id,
+        this.startDate,
+        this.endDate,
+        this.isCurrent,
+        this.institute,
+        this.degree,
+        this.grade ? parseFloat(this.grade) : undefined
+      )
       this.$emit(EVENT_EDUCATION, education)
     },
     onCancel() {

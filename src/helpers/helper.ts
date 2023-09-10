@@ -18,3 +18,7 @@ export function createDate(monthYear: MonthYear): Date {
 export function stringifyError(error: any): string {
   return JSON.stringify(error, Object.getOwnPropertyNames(error))
 }
+
+export function isNumber(numberString: string): boolean {
+  return !!numberString && (Number.isInteger(numberString) || !isNaN(parseFloat(numberString)))
+}

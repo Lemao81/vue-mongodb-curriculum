@@ -65,9 +65,9 @@ export default {
       const result = await this.$curriculumApi.addJob(job)
       this._handleCurriculumCrudResult(result)
     },
-    onEducation(education: Education) {
-      console.log(education)
-      this.isEdit = false
+    async onEducation(education: Education) {
+      const result = await this.$curriculumApi.addEducation(education)
+      this._handleCurriculumCrudResult(result)
     },
     onCancel() {
       this.isEdit = false
